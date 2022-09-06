@@ -259,6 +259,14 @@ Source: https://github.com/mozmorris/tomorrow-pygments
 .highlight {
     background: #ffffff;
     color: #000000;
+    border: 1px solid #000000;
+}
+
+.highlight .lntable pre {
+    overflow-x: scroll;
+    padding: .5rem;
+    font-size: 16px;
+    line-height: 1.3;
 }
 
 /* Comment */
@@ -581,6 +589,25 @@ Source: https://github.com/mozmorris/tomorrow-pygments
     color: #FF4500;
 }
 
+/* Line Number */
+.highlight .ln {
+    margin-right: 1rem;
+}
+
+.highlight .lntable {
+    border-collapse: collapse;
+    border: 0;
+}
+
+.highlight .lntable td,
+.highlight .lntable tr {
+    padding: 0;
+    margin: 0;
+    border: none !important;
+    outline: 0;
+
+}
+
 
 * {
     box-sizing: border-box;
@@ -838,7 +865,6 @@ header nav ul li a:hover {
     padding: 1.25rem;
     font-size: 16px;
     line-height: 1.3;
-    border: 1px solid #000000;
 }
 
 code.highlighter-rouge {
