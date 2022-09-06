@@ -856,7 +856,7 @@ header nav ul li a:hover {
 
 .article--tag_list {
     list-style: none;
-    margin: 0.625rem;
+    margin: 1rem 0;
     padding: 0;
 }
 
@@ -919,10 +919,6 @@ footer {
     h6 {
         margin-left: 0;
         margin-right: 0;
-    }
-
-    .article--tag_list {
-        margin: 0;
     }
 }
 
