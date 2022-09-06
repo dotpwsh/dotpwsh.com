@@ -652,7 +652,7 @@ ol {
 }
 
 header {
-    background: #240046;
+    background: #000000;
     padding: 10px 40px;
     overflow: hidden;
 }
@@ -732,7 +732,8 @@ header nav ul li a:hover {
 }
 
 .introduction {
-    background: #240046;
+    background: rgb(2, 0, 36);
+    background: radial-gradient(circle, rgba(43, 66, 95, 1) 0%, rgba(2, 0, 36, 1) 100%);
     font-size: 1.438rem;
     color: #FFFFFF;
     padding: 4rem 0;
