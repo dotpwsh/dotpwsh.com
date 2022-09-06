@@ -10,7 +10,7 @@ HTTP Basic Authentication is one of many authentication schemes supported by the
 
 Let's start with an example from scratch.
 
-```powershell {linenos=inline}
+```powershell {linenos=true}
 # We define our username and password. Ideally this should come from environment variables
 # or some secret store
 $username = "user1"
@@ -46,7 +46,7 @@ On the last line we send our request with the custom header.
 
 Since Basic Authentication is so common, Powershell has of course implemented a simpler solution.
 
-```powershell {linenos=inline}
+```powershell {linenos=true}
 # Again, these should come from env vars, Key Vault or some other secret store
 $username = "user1"
 $password = "pa55w0rd!"
