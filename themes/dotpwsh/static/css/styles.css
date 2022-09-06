@@ -678,6 +678,21 @@ ol {
     margin-right: 0.9375rem;
 }
 
+p code {
+    background-color: rgba(9, 30, 66, 0.08);
+    font-size: 0.875em;
+    font-family: Consolas, Courier, monospace;
+    font-weight: normal;
+    border-style: none;
+    border-radius: 3px;
+    display: inline;
+    padding: 2px 0.5ch;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    overflow: auto;
+    box-decoration-break: clone;
+}
+
 header {
     background: #000000;
     padding: 10px 40px;
