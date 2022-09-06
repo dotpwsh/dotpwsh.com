@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>List Azure resources in Terraform project | .pwsh</title>
+  <meta
+    name="title"
+    content="List Azure resources in Terraform project &middot; .pwsh"
+  />
+
+  
+  <script async defer data-domain="dotpwsh.com" src="https://stats.moiaune.dev/js/plausible.js"></script>
+
+  <link rel="shortcut icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body><header>
+    <h1 class="site-title">
+        <a href="/">.pwsh</a>
+    </h1>
+
+    <nav class="main-nav">
+        <ul class="nav">
+            <li><a class="main-nav__item" href="/">Enter-Home</a></li>
+            <li><a class="main-nav__item" href="/bookmarks">Get-Bookmarks</a></li>
+            <li><a class="main-nav__item" href="/about">Show-About</a></li>
+            <li><a class="main-nav__item" href="/archive">List-Archive</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+<div class="container">
+    <div class="main_content">
+        <article class="article">
+            <h1 class="article--heading">List Azure resources in Terraform project</h1>
+
+            <p class="article--datetime">Thursday, June 03 2021</p>
+
+            <div class="article--body"><p>Some Terraform projects can grow really big and I can be hard to keep track of which Azure resources are in use. Recently I found myself wanting to know which Azure resources our Terraform project use so that I could document them internally. It could also be helpful in case there has been some major changes to some resources in the azurerm Terraform provider that you want to check.</p>
+<p>This, not so little, one-liner will list all <code>azurerm_</code> and <code>azuread_</code> resources uniquely in your entire Terraform project if you run it from your root module.</p>
+<script src="https://gist.github.com/madsaune/943f2124375625700f00dbe2f150c28b.js"></script>
+</div>
+
+            <ul class="article--tag_list">
+                
+                <li>Powershell</li>
+                
+                <li>Terraform</li>
+                
+            </ul>
+        </article>
+        </section>
+    </div>
+</div>
+
+<footer>
+  <p>Copyright &copy; 2022 - dotpwsh.com</p>
+  <p>Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://netlify.com">Netlify</a></p>
+</footer>
+</body>
+
+</html>

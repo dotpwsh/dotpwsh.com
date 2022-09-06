@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Powershell: Extract Windows Spotlight images | .pwsh</title>
+  <meta
+    name="title"
+    content="Powershell: Extract Windows Spotlight images &middot; .pwsh"
+  />
+
+  
+  <script async defer data-domain="dotpwsh.com" src="https://stats.moiaune.dev/js/plausible.js"></script>
+
+  <link rel="shortcut icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body><header>
+    <h1 class="site-title">
+        <a href="/">.pwsh</a>
+    </h1>
+
+    <nav class="main-nav">
+        <ul class="nav">
+            <li><a class="main-nav__item" href="/">Enter-Home</a></li>
+            <li><a class="main-nav__item" href="/bookmarks">Get-Bookmarks</a></li>
+            <li><a class="main-nav__item" href="/about">Show-About</a></li>
+            <li><a class="main-nav__item" href="/archive">List-Archive</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+<div class="container">
+    <div class="main_content">
+        <article class="article">
+            <h1 class="article--heading">Powershell: Extract Windows Spotlight images</h1>
+
+            <p class="article--datetime">Wednesday, December 12 2018</p>
+
+            <div class="article--body"><p>A very nice feature of Windows 10 is Windows Spotlight who serves beautiful wallpapers on your lock screen every day. It’s a shame these beautiful images are hidden in a system folder somewhere in Windows, so today I’m going to show you how you can extract these images with Powershell. You could perfectly do this manually, but since these images change periodically (haven’t found any info on when) its much easier to just run a script. Personally I run this script as a scheduled job everyday.</p>
+<p>So here’s the script:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="cm">&lt;# Filename: Get-WindowsSpotlightImages.ps1 #&gt;</span>
+
+<span class="k">Param</span> <span class="p">(</span>
+    <span class="no">[String]</span> <span class="nv">$OutputFolder</span> <span class="p">=</span> <span class="s2">&#34;$env:USERPROFILE\Pictures\Spotlight&#34;</span>
+<span class="p">)</span>
+
+<span class="nb">Add-Type</span> <span class="n">-AssemblyName</span> <span class="n">System</span><span class="p">.</span><span class="n">Drawing</span>
+
+<span class="k">If</span><span class="p">(</span><span class="o">-not</span> <span class="p">(</span><span class="nb">Test-Path</span> <span class="nv">$OutputFolder</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nb">New-Item</span> <span class="nv">$OutputFolder</span> <span class="n">-ItemType</span> <span class="n">Directory</span> <span class="p">|</span> <span class="nb">Out-Null</span>
+<span class="p">}</span>
+
+<span class="nb">Get-ChildItem</span> <span class="s2">&#34;$env:USERPROFILE\AppData\Local\Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\LocalState\Assets&#34;</span> <span class="p">|</span> <span class="nb">ForEach-Object</span> <span class="p">{</span>
+
+    <span class="nv">$NewFilename</span> <span class="p">=</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Name</span> <span class="p">+</span> <span class="s2">&#34;.jpeg&#34;</span>
+    <span class="k">If</span><span class="p">(</span><span class="o">-not</span> <span class="p">(</span><span class="nb">Test-Path</span> <span class="p">(</span><span class="nb">Join-Path</span> <span class="nv">$OutputFolder</span> <span class="nv">$NewFilename</span><span class="p">)))</span> <span class="p">{</span>
+        <span class="nb">Copy-Item</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Fullname</span> <span class="p">(</span><span class="nb">Join-Path</span> <span class="nv">$OutputFolder</span> <span class="nv">$NewFilename</span><span class="p">)</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+
+<span class="nv">$ImagesToRemove</span> <span class="p">=</span> <span class="p">@()</span>
+<span class="nv">$AllImages</span> <span class="p">=</span> <span class="nb">Get-ChildItem</span> <span class="p">(</span><span class="nb">Join-Path</span> <span class="nv">$OutputFolder</span> <span class="s2">&#34;*.jpeg&#34;</span><span class="p">)</span>
+<span class="nv">$AllImages</span> <span class="p">|</span> <span class="nb">ForEach-Object</span> <span class="p">{</span>
+    <span class="nv">$image</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">System</span><span class="p">.</span><span class="n">Drawing</span><span class="p">.</span><span class="n">Bitmap</span> <span class="nv">$_</span><span class="p">.</span><span class="n">FullName</span>
+    <span class="k">If</span><span class="p">(</span><span class="o">-not</span> <span class="p">(</span><span class="nv">$image</span><span class="p">.</span><span class="n">Width</span> <span class="o">-ge</span> <span class="n">1920</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nv">$ImagesToRemove</span> <span class="p">+=</span> <span class="nv">$_</span><span class="p">.</span><span class="n">FullName</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="p">}</span>
+    <span class="nv">$image</span><span class="p">.</span><span class="n">Dispose</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="nv">$ImagesToRemove</span> <span class="p">|</span> <span class="nb">Remove-Item</span>
+</code></pre></div><p>Now lets break it down.</p>
+<p><strong>Line 3-5:</strong> We set the defualt output folder to a spotlight folder in the user’s picture folder.</p>
+<p><strong>Line 7:</strong> We must import the assembly System.Drawing to be able to read the image size.</p>
+<p><strong>Line 9-11:</strong> We create the output folder if it does not exist.</p>
+<p><strong>Line 13-20:</strong> So here you can see the path where Windows Spotlight images are stored. It contains images for both desktop screens and mobile screens. They are not stored with a file extension, so we give them a <em>.jpeg</em> extension so that we can handle them later. Then we copy them to the output folder with the new extension.</p>
+<p><strong>Line 22-31:</strong> We loop through all images in the output folder matching extension <em>.jpeg.</em> Then we look for images that are ment for desktop screens (width larger than 1920px) since we dont want the mobile ones.</p>
+<blockquote>
+<p>NOTE: If you would like to have images ment for both desktop and mobile, you could just remove everything from line 21 and down and line 7.</p>
+</blockquote>
+<p>The filename of images that do not meet our requirment of <code>width=1920px</code> will be added to an array <code>$ImagesToRemove</code>. It’s important that we dispose the image object when we’re done reading from it, or else you will get a lot of errors.</p>
+<p><strong>Line 33:</strong> This loops through our <code>$ImagesToRemove</code> array and delete images in the output folder that match the filename from our array.</p>
+<h2 id="what-now">What now</h2>
+<p>Since Windows Spotlight update it’s images periodically it would make sense to set this script up as a scheduled job or you could run it manually when you feel like.</p>
+<p>Also, this script could probably improve. I’m no Powershell master. If you have some improvements, please comment below. I’m eager to learn!</p>
+</div>
+
+            <ul class="article--tag_list">
+                
+                <li>Powershell</li>
+                
+                <li>Windows 10</li>
+                
+            </ul>
+        </article>
+        </section>
+    </div>
+</div>
+
+<footer>
+  <p>Copyright &copy; 2022 - dotpwsh.com</p>
+  <p>Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://netlify.com">Netlify</a></p>
+</footer>
+</body>
+
+</html>

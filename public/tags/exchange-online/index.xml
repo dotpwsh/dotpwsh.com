@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Exchange Online on .pwsh</title>
+    <link>https://dotpwsh.com/tags/exchange-online/</link>
+    <description>Recent content in Exchange Online on .pwsh</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 14 Feb 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://dotpwsh.com/tags/exchange-online/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Enable External Users to Book Meeting Rooms</title>
+      <link>https://dotpwsh.com/2020/02/14/enable-external-users-to-book-meeting-rooms/</link>
+      <pubDate>Fri, 14 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/2020/02/14/enable-external-users-to-book-meeting-rooms/</guid>
+      <description>From time to time you might need to share one or more of your meeting rooms with external users. In this posts we&amp;rsquo;re going through three options for how you can enable this. Other options do exists (like connecting an Office 365 tenant to another and so), but this post is meant for the time you need to give temporary access or only to one or more users.
+Disclaimer: I have only tried this is Exchange Online.</description>
+    </item>
+    
+  </channel>
+</rss>

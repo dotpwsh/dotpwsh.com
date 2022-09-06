@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Windows on .pwsh</title>
+    <link>https://dotpwsh.com/tags/windows/</link>
+    <description>Recent content in Windows on .pwsh</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 23 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://dotpwsh.com/tags/windows/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Quicktip: Send output to clipboard</title>
+      <link>https://dotpwsh.com/2021/04/23/quicktip-send-output-to-clipboard/</link>
+      <pubDate>Fri, 23 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/2021/04/23/quicktip-send-output-to-clipboard/</guid>
+      <description>Ever found yourself wanting to copy the output from a command to your clipboard without having to select it first? Or maybe copy the contents of a file, like a config file? In this short article we&amp;rsquo;re going to cover how to do that in Windows, MacOS and Linux with Powershell.
+The powershell way Powershell 7 has a built-in cross platform cmdlet for both getting and setting your clipboard.
+PS&amp;gt; &amp;#34;Hello, World!</description>
+    </item>
+    
+    <item>
+      <title>Improving Your Powershell Profile (Windows)</title>
+      <link>https://dotpwsh.com/2020/06/18/improving-your-powershell-profile-windows/</link>
+      <pubDate>Thu, 18 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/2020/06/18/improving-your-powershell-profile-windows/</guid>
+      <description>For years I&amp;rsquo;ve been a fan of the linux bash, with easy support for ssh-keys, colorized directory listings and git info the prompt. But at the same time, I really love Powershell. I have finally found some usefull Powershell modules that has made me switch completly to Powershell in the terminal.
+Colorized Directory Listings The first module I&amp;rsquo;m going to introduce is the Get-ChildItemColor module by Joon Ro (github.com/joonro/Get-ChildItemColor).
+This module will override the Out-Default cmdlet and give you colorized directory listings when using Get-ChildItem or ls.</description>
+    </item>
+    
+  </channel>
+</rss>

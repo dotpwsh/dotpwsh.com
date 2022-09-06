@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Getting started with Azure Functions | .pwsh</title>
+  <meta
+    name="title"
+    content="Getting started with Azure Functions &middot; .pwsh"
+  />
+
+  
+  <script async defer data-domain="dotpwsh.com" src="https://stats.moiaune.dev/js/plausible.js"></script>
+
+  <link rel="shortcut icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body><header>
+    <h1 class="site-title">
+        <a href="/">.pwsh</a>
+    </h1>
+
+    <nav class="main-nav">
+        <ul class="nav">
+            <li><a class="main-nav__item" href="/">Enter-Home</a></li>
+            <li><a class="main-nav__item" href="/bookmarks">Get-Bookmarks</a></li>
+            <li><a class="main-nav__item" href="/about">Show-About</a></li>
+            <li><a class="main-nav__item" href="/archive">List-Archive</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+<div class="container">
+    <div class="main_content">
+        <article class="article">
+            <h1 class="article--heading">Getting started with Azure Functions</h1>
+
+            <p class="article--datetime">Wednesday, February 19 2020</p>
+
+            <div class="article--body"><p>Azure Functions is one of Microsofts serverless services that you can setup in Azure. Being serverless means that you dont have to worry about the infrastructure and environment behind it and you will only pay for the capacity that you actually use when the function is running. Traditionally you would have a server that runs 24/7 and consume capacity. Very simplified, serverless will spin up and down as requests comes in. This means that you only have to focus on the code it should run.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ol>
+<li>An Azure Subscription</li>
+<li>Azure CLI (<a href="https://docs.microsoft.com/nb-no/cli/azure/install-azure-cli?view=azure-cli-latest">Install the Azure CLI</a>)</li>
+<li>Node.js and npm</li>
+</ol>
+<p>You can register for a free Azure subscription here: <a href="https://azure.microsoft.com/en-us/free/">https://azure.microsoft.com/en-us/free/</a></p>
+<h2 id="introduction">Introduction</h2>
+<p>In this article I will walk you through the following subjects.</p>
+<ol>
+<li>Create an Azure Function</li>
+<li>Install Azure Functions Core Tools and create a new local function</li>
+<li>Publish function to Azure Function</li>
+</ol>
+<h2 id="create-an-azure-function">Create an Azure Function</h2>
+<h3 id="connecting-to-azure">Connecting to Azure</h3>
+<p>The first task is to login to Azure through our CLI.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">az login
+</code></pre></div><p>This will try to open your browser and direct you to a login page, if not you will be instructed to go to <a href="https://microsoft.com/devicelogin">https://microsoft.com/devicelogin</a> and type in a token that is also provided.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">dotpwsh@demo:~$ az login
+WARNING: To sign in, use a web browser to open the page https://microsoft.com/devicelogin and enter the code &lt;TOKEN&gt; to authenticate.
+</code></pre></div><p>Now that we&rsquo;re logged in we can start working with Azure.</p>
+<h3 id="preparation">Preparation</h3>
+<p>To setup an Azure Function we&rsquo;re going to need the following resources from Azure.</p>
+<ul>
+<li>Resource Group</li>
+<li>Storage Account</li>
+<li>Azure Function</li>
+</ul>
+<p>Each of them is going to need, among other things, a name and location. To make it easier for us let&rsquo;s prep some variables.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">LOCATION</span><span class="o">=</span>westeurope
+<span class="nv">RESOURCE_NAME</span><span class="o">=</span>af-test-rg
+<span class="nv">STORAGE_NAME</span><span class="o">=</span><span class="k">$(</span>head /dev/urandom <span class="p">|</span> tr -dc A-Za-z0-9 <span class="p">|</span> head -c 12<span class="k">)</span>-af-test-sa <span class="c1">#E.g SdE4npmV81ok-af-test-sa</span>
+<span class="nv">FUNCTION_NAME</span><span class="o">=</span><span class="k">$(</span>head /dev/urandom <span class="p">|</span> tr -dc A-Za-z0-9 <span class="p">|</span> head -c 12<span class="k">)</span>-test-af <span class="c1">#E.g 48aDF9HYfiWY-test-af</span>
+</code></pre></div><blockquote>
+<p>It&rsquo;s a good practice to append a shortcode to the end of Azure resource name&rsquo;s that says something about what it is. E.g &lsquo;sa&rsquo; for storage account, &lsquo;rg&rsquo; for resource group, &lsquo;af&rsquo; for Azure Functions and so on.</p>
+</blockquote>
+<p>Every resource in Azure needs to live somewhere, so we have to specify a location. In this example I&rsquo;m going to use <code>westeurope</code> for all the resources because it&rsquo;s the closest for me, but you should choose something close to you.</p>
+<p>To list available locations you can run these two commands.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">az account list-locations -o table
+az functionapp list-consumption-locations -o table
+</code></pre></div><p>We also create a name variable for each of our resources. The resource group name only needs to be unique within your subscription, but both storage account and function app names must be globally unique. Therefor we&rsquo;re append a random string of characters infront of it. The storage account name can only be between 3 and 24 characters long.</p>
+<p>How you choose to generate the random string is up to you.</p>
+<h3 id="create-a-resource-group">Create a Resource Group</h3>
+<p>Briefly, every service in Azure must belong to a resource group. You can have one or more services within a resource group. For the most part you want to use resource groups as a logical collection of services related to a project or deployment. E.g a website might need an App Service, Storage and some Analytics. Services related to that specific website should reside in the same resource group, so when the day come that you want to decomission it, you can just delete the whole resource group. It also gives you a better overview of which services are related.</p>
+<p>Let&rsquo;s start by creating our resource group.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">az group create --name <span class="nv">$RESOURCE_NAME</span> --location <span class="nv">$LOCATION</span>
+</code></pre></div><p>The <code>--name</code> parameter is what we would like to call our resource group. As mentioned this must be unique within your subscription. The <code>--location</code> parameter is where we want our resource group to be stored. Since we have already decided on the name and location, we can use the variables we setup earlier.</p>
+<h3 id="create-our-storage-account">Create our Storage Account</h3>
+<p>Next, we need a storage account where our files (code and modules) will be stored. Azure Functions does not include storage on its own.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">az storage account create <span class="se">\
+</span><span class="se"></span>--name <span class="nv">$STORAGE_NAME</span> <span class="se">\
+</span><span class="se"></span>--location <span class="nv">$LOCATION</span> <span class="se">\
+</span><span class="se"></span>--resource-group <span class="nv">$RESOURCE_NAME</span> <span class="se">\
+</span><span class="se"></span>--sku Standard_LRS
+</code></pre></div><p>The only thing here that we havent defined beforehand is the type of storage we want. The <code>--sku</code> paramter is how we define which type we want. Here we use the simplest one which is &lsquo;Standard_LRS&rsquo;.</p>
+<h3 id="create-our-function-app">Create our Function app</h3>
+<p>Lastly, we&rsquo;re going to create our Azure Function app.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">az functionapp create <span class="se">\
+</span><span class="se"></span>--name <span class="nv">$FUNCTION_NAME</span> <span class="se">\
+</span><span class="se"></span>--resource-group <span class="nv">$RESOURCE_NAME</span> <span class="se">\
+</span><span class="se"></span>--consumption-plan-location <span class="nv">$LOCATION</span> <span class="se">\
+</span><span class="se"></span>--storage-account <span class="nv">$STORAGE_NAME</span> <span class="se">\
+</span><span class="se"></span>--runtime node
+</code></pre></div><p>Here we create the Azure Function app and link it to the resources we created earlier. One important parameter is the <code>--runtime</code> parameter which define what kind of runtime you want. This can be one of the following: dotnet, java, node, powershell or python.</p>
+<p>In this example we want our function to run nodejs (Javascript) code, so we specify <code>node</code>. For now, the default Azure Function version is 2, so in our example it will create a nodejs 10 runtime environment for us. You could specify a <code>--functions-version 3</code> and then <code>--runtime-version 12</code> to get the latest nodejs runtime environment. For simplicity we&rsquo;re going to stick with the defaults.</p>
+<blockquote>
+<p>You can read more about the available options here: <a href="https://docs.microsoft.com/en-us/cli/azure/functionapp?view=azure-cli-latest#az-functionapp-create">az functionapp create</a></p>
+</blockquote>
+<p>When this command has finished, our Function app is up and running, but we havent deployed any code yet, so let&rsquo;s do that.</p>
+<h3 id="bonus-azure-function-appsettings">Bonus: Azure Function appsettings</h3>
+<p>A Function app can have <strong>Application settings</strong> which are exposed as environmental variables in your code. Let&rsquo;s say you have one or more functions (within your Function app) that does something and then sends a notification to a Microsoft Teams channel. You can then expose the Teams Webhook Uri as environmental variables instead of hardcoding them in each function. This makes it very easy to send the notification to another channel.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">az functionapp config appsettings <span class="nb">set</span> <span class="se">\
+</span><span class="se"></span>--name <span class="nv">$FUNCTION_NAME</span> <span class="se">\
+</span><span class="se"></span>--resource-group <span class="nv">$RESOURCE_NAME</span> <span class="se">\
+</span><span class="se"></span>--settings <span class="nv">TEAMS_URL</span><span class="o">=</span>&lt;YOUR_TEAMS_WEBHOOK_URL&gt;
+</code></pre></div><p>The command needs the name of the Function app and the resource group that the Function app is in, then you can specify the settings with <code>&lt;VARIABLE_NAME&gt;=&lt;VALUE&gt;</code> format. If you want to specify multiple settings you can separate them with spaces. If the setting already exists, it will replace it&rsquo;s value. <strong>NOTICE: That there&rsquo;s no space between the &lsquo;variable_name&rsquo; and the &lsquo;value&rsquo;</strong>.</p>
+<h2 id="install-azure-functions-core-tools-and-create-a-new-local-function">Install Azure Functions Core Tools and create a new local function</h2>
+<p>Now that we have set everything up in Azure, we&rsquo;re ready to start developing our functions, but first we need to install <strong>Azure Functions Core Tools</strong> which will help us to generate a function template and publish it to Azure when we&rsquo;re done.</p>
+<h3 id="installing-azure-functions-core-tools">Installing Azure Functions Core Tools</h3>
+<p>Azure Functions Core Tools is a npm package, so we need to install it through npm.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">npm install -g azure-functions-core-tools
+</code></pre></div><p>This will install the <strong>azure-functions-core-tools</strong> package globally, which means that we dont have to install for every project. By default this will install the package for Function app version 2. If your Function app version is 3, you must specify the version, like so:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">npm install -g azure-functions-core-tools@3
+</code></pre></div><h3 id="create-our-function-app-project">Create our Function app project</h3>
+<p>When the azure-functions-core-tools package is done installing, we can generate a new project like this. This will create a <em>azurefn-test-project</em> folder in your current directory with a set of standard files.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">func init azurefn-test-project
+</code></pre></div><p>You will be prompted for a runtime. In this example choose <code>node</code> and <code>javascript</code>. When done, <code>cd</code> into your project folder.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> azurefn-test-project
+</code></pre></div><p>Now our project is setup, but we haven&rsquo;t yet created any functions.</p>
+<h3 id="create-our-function-inside-the-project">Create our function inside the project</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">func new --name HelloFromOutside
+</code></pre></div><p>This command will create our function. You will be prompted for which template you want to choose. In this example choose &ldquo;Http Trigger&rdquo;, which will give us a template for a function that runs when its requested by HTTP. If you e.g want to do something scheduled you can choose &ldquo;Timer Trigger&rdquo;.</p>
+<blockquote>
+<p>You can create multiple functions by invoking <code>func new</code> and give it a name. Every function you create inside this project will be published to our Function app in Azure.</p>
+</blockquote>
+<p>Our project structure should now look like this.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext">dotpwsh@demo:~$ tree .
+.
+├ HelloFromOutside
+│   ├ function.json
+│   └ index.js
+├ host.json
+├ local.settings.json
+└ package.json
+
+1 directory, 5 files
+</code></pre></div><p>Our function itself resides in the <em>HelloFromOutside</em> folder and the code that runs is in the <em>index.js</em> file.</p>
+<p>The function generated from the <code>func new</code> command will look for a name parameter either in the queryString or the body of the request and send back &ldquo;Hello &lt;name&gt;&rdquo;. We&rsquo;re not going to build out a fancy function, since it&rsquo;s not the scope of this article, but you can do all sorts of things here. This will do for now.</p>
+<h3 id="testing-our-function">Testing our function</h3>
+<p>To test your functions locally you can run the <code>func start</code> command to spin up a local server which will give you an URI that you can hit through HTTP (e.g your browser, curl, postman or whatever).</p>
+<h2 id="publish-function-to-azure-function">Publish function to Azure Function</h2>
+<p>When you&rsquo;re done writing and testing your function it&rsquo;s time to publish it to Azure Function so that it&rsquo;s available from the outside. This is a oneline command that will do everything for you, just make sure you are logged in with <code>az login</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">func azure functionapp publish <span class="nv">$FUNCTION_NAME</span>
+</code></pre></div><p>This command might take some time to finish. Essentially this command will send your code to Azure, build it, and deploy it to your Function app.</p>
+<blockquote>
+<p>You can read more about the <code>func azure functionapp publish</code> options here <a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=windows#publish">Publish to Azure</a></p>
+</blockquote>
+<p>When it&rsquo;s finished publishing you will get, among other things, a &ldquo;Invoke url&rdquo; back. Copy this, and verify that your function is working. <strong>NOTE: The code in the URI will differ from function to function</strong>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">dotpwsh@demo:~$ curl https://48aDF9HYfiWY-test-af.azurewebsites.net/api/HelloFromOutside?code<span class="o">=</span><span class="nv">HmPfMj4ImBd7VwrL31IO47OZlLataj2A6LMw6mkQA4sbJSLQiEDtNm</span><span class="o">==</span><span class="p">&amp;</span><span class="nv">name</span><span class="o">=</span>dotpwsh
+
+Hello dotpwsh
+</code></pre></div><h2 id="wrapping-up">Wrapping up</h2>
+<p>In this article we&rsquo;ve gone over how to create an Azure Function in Azure through the Azure CLI. We have created a Function app locally, tested it and published it to Azure. All of this is fairly straight forward and can easily be automated. The next step would be to create a repository in Azure DevOps and then automatically build and publish it to your Function app on commit to master branch or some other trigger. That will be for another article.</p>
+<p>Have fun creating your Azure Function apps. The sky is the limit for what this can use this for!</p>
+</div>
+
+            <ul class="article--tag_list">
+                
+                <li>Azure Functions</li>
+                
+                <li>Azure CLI</li>
+                
+            </ul>
+        </article>
+        </section>
+    </div>
+</div>
+
+<footer>
+  <p>Copyright &copy; 2022 - dotpwsh.com</p>
+  <p>Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://netlify.com">Netlify</a></p>
+</footer>
+</body>
+
+</html>

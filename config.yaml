@@ -1,6 +1,7 @@
 baseURL: 'https://dotpwsh.com/'
 languageCode: en-us
 title: .pwsh
+theme: dotpwsh
 PygmentsCodeFences: true
 PygmentsUseClasses: true
 PygmentsStyle: fruity

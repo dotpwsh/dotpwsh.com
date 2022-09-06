@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Confluence on .pwsh</title>
+    <link>https://dotpwsh.com/tags/confluence/</link>
+    <description>Recent content in Confluence on .pwsh</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 20 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://dotpwsh.com/tags/confluence/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Powershell: Uploading files with multipart/form-data</title>
+      <link>https://dotpwsh.com/2021/04/20/powershell-uploading-files-with-multipart/form-data/</link>
+      <pubDate>Tue, 20 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/2021/04/20/powershell-uploading-files-with-multipart/form-data/</guid>
+      <description>By default, when you use the -InFile parameter of Invoke-RestMethod Powershell will send it as application/octet-stream. In this short article we&amp;rsquo;ll look at how to send that file with multipart/form-data instead which is what most forms on the web use.
+To send multipart/form-data with Powershell we can use the -Form parameter which takes a hashtable of fields and values.
+I couldn&amp;rsquo;t find a service that would allow us to test file uploads for free, so in this example we&amp;rsquo;re going to use the Confluence Cloud REST API to upload an attachment to a page.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Quicktip: Send output to clipboard | .pwsh</title>
+  <meta
+    name="title"
+    content="Quicktip: Send output to clipboard &middot; .pwsh"
+  />
+
+  
+  <script async defer data-domain="dotpwsh.com" src="https://stats.moiaune.dev/js/plausible.js"></script>
+
+  <link rel="shortcut icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body><header>
+    <h1 class="site-title">
+        <a href="/">.pwsh</a>
+    </h1>
+
+    <nav class="main-nav">
+        <ul class="nav">
+            <li><a class="main-nav__item" href="/">Enter-Home</a></li>
+            <li><a class="main-nav__item" href="/bookmarks">Get-Bookmarks</a></li>
+            <li><a class="main-nav__item" href="/about">Show-About</a></li>
+            <li><a class="main-nav__item" href="/archive">List-Archive</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+<div class="container">
+    <div class="main_content">
+        <article class="article">
+            <h1 class="article--heading">Quicktip: Send output to clipboard</h1>
+
+            <p class="article--datetime">Friday, April 23 2021</p>
+
+            <div class="article--body"><p>Ever found yourself wanting to copy the output from a command to your clipboard without having to select it first? Or maybe copy the contents of a file, like a config file? In this short article we&rsquo;re going to cover how to do that in Windows, MacOS and Linux with Powershell.</p>
+<h2 id="the-powershell-way">The powershell way</h2>
+<p>Powershell 7 has a built-in cross platform cmdlet for both getting and setting your clipboard.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="n">PS</span><span class="p">&gt;</span> <span class="s2">&#34;Hello, World!&#34;</span> <span class="p">|</span> <span class="nb">Set-Clipboard</span>
+<span class="n">PS</span><span class="p">&gt;</span> <span class="nb">Get-Clipboard</span>
+<span class="n">Hello</span><span class="p">,</span> <span class="n">World</span><span class="p">!</span>
+</code></pre></div><p>or the shorter way</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="n">PS</span><span class="p">&gt;</span> <span class="s2">&#34;Hello, World!&#34;</span> <span class="p">|</span> <span class="n">scb</span>
+<span class="n">PS</span><span class="p">&gt;</span> <span class="n">gcb</span>
+<span class="n">Hello</span><span class="p">,</span> <span class="n">World</span><span class="p">!</span>
+</code></pre></div><h2 id="native-commands">Native commands</h2>
+<p>The built-in Powershell cmdlets are great, but just for fun, let&rsquo;s explore some other older commands native to it&rsquo;s platform.</p>
+<h3 id="windows">Windows</h3>
+<p>In Windows we have a command called <code>clip</code>. We can either pass a file or pipe output to this command and it will copy it to our clipboard.</p>
+<h4 id="piping">Piping</h4>
+<p>Now let&rsquo;s say we want to fetch our public ip and copy it to clipboard we would do the following:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">irm </span><span class="n">ifconfig</span><span class="p">.</span><span class="n">co</span><span class="p">/</span><span class="n">ip</span> <span class="p">|</span> <span class="n">clip</span>
+</code></pre></div><p>If you <code>Ctrl+v</code> in your text editor of choice you should see the output of the command (in this example; your public ip).</p>
+<h4 id="copy-file-contents">Copy file contents</h4>
+<p>Let&rsquo;s say we want to share our Powershell profile settings, we could easily copy the contents:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">copy </span><span class="nv">$profile</span>
+</code></pre></div><h3 id="macos">MacOS</h3>
+<p>MacOS also comes with it&rsquo;s own command for copying output to clipboard, which is <code>pbcopy</code>.</p>
+<p>Using the same example as in Windows, it will look like this:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">irm </span><span class="n">ifconfig</span><span class="p">.</span><span class="n">co</span><span class="p">/</span><span class="n">ip</span> <span class="p">|</span> <span class="n">pbcopy</span>
+</code></pre></div><p>Issuing <code>cmd + v</code> in a text editor should give you your public ip.</p>
+<p><code>pbcopy</code> does not support providing a file, like <code>clip</code> does, but we can easily achieve the same result by using <code>cat</code>and pipe the output to <code>pbcopy</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">cat </span><span class="nv">$profile</span> <span class="p">|</span> <span class="n">pbcopy</span>
+</code></pre></div><h3 id="linux">Linux</h3>
+<p>Similar for Linux, we have the <code>xclip</code> command which looks a lot like the Windows version, but unlike Windows and MacOS, <code>xclip</code> does not come pre-installed in most Linux distributions. Luckily its available from all the major package managers.</p>
+<p><strong>Ubuntu based systems</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sudo apt install xclip
+</code></pre></div><p><strong>RHEL based systems</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sudo yum install xclip
+</code></pre></div><p><strong>Arch based systems</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">sudo pacman install xclip
+</code></pre></div><h4 id="piping-1">Piping</h4>
+<p>Again, using the same example as for Windows and MacOS, this will copy your public ip to your clipboard in Linux.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">irm </span><span class="n">ifconfig</span><span class="p">.</span><span class="n">co</span><span class="p">/</span><span class="n">ip</span> <span class="p">|</span> <span class="n">xclip</span>
+</code></pre></div><h4 id="copy-file-contents-1">Copy file contents</h4>
+<p>And like Windows version, <code>xclip</code> also supports providing a file to copy instead of having to use <code>cat</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="n">xclip</span> <span class="nv">$profile</span>
+</code></pre></div><h2 id="summary">Summary</h2>
+<p>As you see, this is nothing fancy, but can come in handy in several scenarios especially if you like to do most of your work in the terminal.</p>
+</div>
+
+            <ul class="article--tag_list">
+                
+                <li>Powershell</li>
+                
+                <li>Windows</li>
+                
+                <li>MacOS</li>
+                
+                <li>Linux</li>
+                
+            </ul>
+        </article>
+        </section>
+    </div>
+</div>
+
+<footer>
+  <p>Copyright &copy; 2022 - dotpwsh.com</p>
+  <p>Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://netlify.com">Netlify</a></p>
+</footer>
+</body>
+
+</html>

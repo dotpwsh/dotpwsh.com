@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Exchange Online: Check your tenant for forwarding rules | .pwsh</title>
+  <meta
+    name="title"
+    content="Exchange Online: Check your tenant for forwarding rules &middot; .pwsh"
+  />
+
+  
+  <script async defer data-domain="dotpwsh.com" src="https://stats.moiaune.dev/js/plausible.js"></script>
+
+  <link rel="shortcut icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body><header>
+    <h1 class="site-title">
+        <a href="/">.pwsh</a>
+    </h1>
+
+    <nav class="main-nav">
+        <ul class="nav">
+            <li><a class="main-nav__item" href="/">Enter-Home</a></li>
+            <li><a class="main-nav__item" href="/bookmarks">Get-Bookmarks</a></li>
+            <li><a class="main-nav__item" href="/about">Show-About</a></li>
+            <li><a class="main-nav__item" href="/archive">List-Archive</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+<div class="container">
+    <div class="main_content">
+        <article class="article">
+            <h1 class="article--heading">Exchange Online: Check your tenant for forwarding rules</h1>
+
+            <p class="article--datetime">Friday, December 07 2018</p>
+
+            <div class="article--body"><p>In this guide we’ll take a look at how you can scan your tenant for “hidden” forwarding rules by using Powershell with Exchange Online.</p>
+<h2 id="why">Why</h2>
+<p>One technique that is common amongs hackers, that gain access to email accounts, is to setup a forwarding rule for all incomming email. That way they can read all new emails sent to the victim without beeing flagget or detected by audit logs. They can also create rules for emails from a specific address that go to a folder the hacker controls, ie password reset emails. They can then request password change for a numerous different services without the user beeing alerted right away and maybe get further into your system. Especially if its cloud based.</p>
+<p>Or, it could be an unfaithful employee that forward emails to a competitor. Either way its critical.</p>
+<h2 id="how">How</h2>
+<p>Exchange Online provides two methods for creating forwarding rules; Inbox Settings and Inbox Rules.</p>
+<h3 id="inbox-settings">Inbox Settings</h3>
+<p>In Exchange Online there’s a specific setting that activates forwarding. In OWA (Outlook Web App) you can find it by browsing to <strong>Mail → Accounts → Forwarding</strong>. In EAC (Exchange Admin Center) open user mailbox then go to <strong>Mailbox Features → Mail Flow → Delivery Options</strong>.</p>
+<h3 id="inbox-rules">Inbox Rules</h3>
+<blockquote>
+<p>A rule is an action that Outlook Web App runs automatically on incoming or outgoing messages. For example, you can create a rule to automatically move all email sent to a group you are a member of to a specific folder, or to delete all messages with “Buy now” in the subject.</p>
+</blockquote>
+<p>This is how Microsoft referers to inbox rules. Basically they are rules that are executed on incomming email and we are going to look for those who does forwarding.</p>
+<h2 id="how-to-scan-your-tenant">How to scan your tenant</h2>
+<p>First, let’s scan for inbox settings.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">Get-Mailbox</span> <span class="n">-ResultSize</span> <span class="n">unlimited</span> <span class="p">|</span>
+<span class="nb">Where-Object</span> <span class="p">{</span> <span class="p">(</span><span class="nv">$_</span><span class="p">.</span><span class="n">ForwardingSMTPAddress</span> <span class="o">-ne</span> <span class="nv">$null</span><span class="p">)</span> <span class="o">-or</span> <span class="p">(</span><span class="nv">$_</span><span class="p">.</span><span class="n">ForwardingAddress</span> <span class="o">-ne</span> <span class="nv">$null</span><span class="p">)</span> <span class="p">}</span> <span class="p">|</span>
+<span class="nb">Select-Object</span> <span class="n">Name</span><span class="p">,</span> <span class="n">ForwardingSMTPAddress</span><span class="p">,</span> <span class="n">ForwardingAddress</span><span class="p">,</span> <span class="n">DeliverToMailboxAndForward</span>
+</code></pre></div><p><strong>Line 1:</strong> We collect all mailboxes in our tenant. ResultSize is by default 1000, so if your have more mailboxes you must include -ResultSize unlimited.</p>
+<p><strong>Line 2:</strong> We will filter out mailboxes which does not have the ‘ForwardingSMTPAddress’ or ‘ForwardingAddress’ attribute set. In other words email forwarding is not configured through settings.</p>
+<p>Now let’s scan for inbox rules, which is a little more complicated.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nv">$Mailboxes</span> <span class="p">=</span> <span class="nb">Get-Mailbox</span> <span class="n">-ResultSize</span> <span class="n">unlimited</span>
+<span class="k">ForEach</span> <span class="p">(</span><span class="nv">$Mailbox</span> <span class="k">in</span> <span class="nv">$Mailboxes</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$MailboxWithRule</span> <span class="p">=</span> <span class="nb">Get-InboxRule</span> <span class="n">-Mailbox</span> <span class="nv">$Mailbox</span><span class="p">.</span><span class="k">Alias</span> <span class="p">|</span> <span class="nb">Where-Object</span> <span class="p">{</span> <span class="p">(</span><span class="nv">$_</span><span class="p">.</span><span class="n">RedirectTo</span> <span class="o">-ne</span> <span class="nv">$null</span><span class="p">)</span> <span class="o">-or</span> <span class="p">(</span><span class="nv">$_</span><span class="p">.</span><span class="n">ForwardTo</span> <span class="o">-ne</span> <span class="nv">$null</span><span class="p">)</span> <span class="o">-or</span> <span class="p">(</span><span class="nv">$_</span><span class="p">.</span><span class="n">ForwardAsAttachmentTo</span> <span class="o">-ne</span> <span class="nv">$null</span><span class="p">)</span> <span class="p">}</span>
+    <span class="k">If</span> <span class="p">(</span><span class="nv">$MailboxWithRule</span> <span class="o">-ne</span> <span class="nv">$Null</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nb">Write-Host</span> <span class="s2">&#34;Mailbox </span><span class="p">$(</span><span class="nv">$Mailbox</span><span class="p">.</span><span class="n">PrimarySmtpAddress</span><span class="p">)</span><span class="s2"> has the following rules configured:&#34;</span>
+        <span class="nv">$MailboxWithRule</span> <span class="p">|</span> <span class="nb">Format-List</span> <span class="n">Name</span><span class="p">,</span> <span class="n">Identity</span><span class="p">,</span> <span class="n">RedirectTo</span><span class="p">,</span> <span class="n">ForwardTo</span><span class="p">,</span> <span class="n">ForwardAsAttachmentTo</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p><strong>Line 1:</strong> We collect all mailboxes in our tenant. ResultSize is by default 1000, so if your have more mailboxes then that you must include -ResultSize unlimited.</p>
+<p><strong>Line 2:</strong> We loop through each mailbox.</p>
+<p><strong>Line 3:</strong> We fetch all inbox rules for current mailbox and filter out those who does not contain a RedirectTo, ForwardTo or ForwardAsAttachment value. <em>NOTE: This cmdlet is pretty slow.</em></p>
+<p><strong>Line 4-7:</strong> If line 3 returns any rules, we will print the address of the mailbox and return all the rules we found.</p>
+<p>The output looks a little something like this:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext">PS C:\Users\dotsh&gt; .\ExportExchangeForwardingInboxRules.ps1
+...
+Mailbox user@contoso.com has the following rules configured:
+
+Name                  : SilentForwarding
+PrimarySmtpAddress    : user@contoso.com
+Identity              : Example User 1\8573016583648562395
+RedirectTo            :
+ForwardTo             : {&#34;Malicous User&#34; [SMTP:hacker@l33t.com]}
+ForwardAsAttachmentTo :
+
+Name                  : MyRule
+PrimarySmtpAddress    : user@contoso.com
+Identity              : Example User 1\8573016583648562395
+RedirectTo            :
+ForwardTo             : {&#34;Example User 2&#34; [SMTP:user2@contoso.com], &#34;Example User 3&#34; [SMTP:user3@contoso.com],
+                        &#34;Example User 4&#34; [SMTP:user4@contoso.com]}
+ForwardAsAttachmentTo :
+
+...
+</code></pre></div><h2 id="finishing-up">Finishing up</h2>
+<p>Often you would forward these results to head of security or something. So to make it easier for them to read the report we could export it to an CSV thats opens up in Excel. The easiest way to do this is to put each script in its own file, ie <code>ExportExchangeForwardingInboxSettings.ps1</code> and <code>ExportExchangeForwardingInboxRules.ps1</code>. Then we could call it like this to export it to CSV.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-plaintext" data-lang="plaintext">PS C:\Users\dotsh&gt; .\ExportExchangeForwardingInboxSettings.ps1 | Export-Csv -Encoding UTF8 -Delimiter &#34;;&#34; -NoTypeInformation -Path &#34;ExchangeForwardingInboxSettings-Report.csv&#34;
+...
+PS C:\Users\dotsh&gt; .\ExportExchangeForwardingInboxRules.ps1 | Export-Csv -Encoding UTF8 -Delimiter &#34;;&#34; -NoTypeInformation -Path &#34;ExchangeForwardingInboxRules-Report.csv&#34;
+...
+</code></pre></div><p>By using <code>-Delimiter ';'</code> Excel will automatically format the table correctly for us.</p>
+<p>Now its just for you to send the report to the right person and you may have avoided a massive data breach.</p>
+</div>
+
+            <ul class="article--tag_list">
+                
+                <li>Powershell</li>
+                
+                <li>Office 365</li>
+                
+            </ul>
+        </article>
+        </section>
+    </div>
+</div>
+
+<footer>
+  <p>Copyright &copy; 2022 - dotpwsh.com</p>
+  <p>Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://netlify.com">Netlify</a></p>
+</footer>
+</body>
+
+</html>

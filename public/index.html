@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html><head>
+	<meta name="generator" content="Hugo 0.87.0" />
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Home | .pwsh</title>
+  <meta
+    name="title"
+    content=".pwsh"
+  />
+
+  
+  <script async defer data-domain="dotpwsh.com" src="https://stats.moiaune.dev/js/plausible.js"></script>
+
+  <link rel="shortcut icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body><header>
+    <h1 class="site-title">
+        <a href="/">.pwsh</a>
+    </h1>
+
+    <nav class="main-nav">
+        <ul class="nav">
+            <li><a class="main-nav__item" href="/">Enter-Home</a></li>
+            <li><a class="main-nav__item" href="/bookmarks">Get-Bookmarks</a></li>
+            <li><a class="main-nav__item" href="/about">Show-About</a></li>
+            <li><a class="main-nav__item" href="/archive">List-Archive</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+<aside class="introduction">
+    
+    <div class="introduction__content">
+        <h2 class="introduction__title">Hei, I'm Mads 👋</h2>
+        <div class="introduction__body">
+            <p>
+                I'm an Automation Engineer from Norway 🇳🇴 spending my days writing code. I like to dabble in
+                Powershell, so I created this blog as way to store and share my experiences with Powershell.
+            </p>
+            <p>
+                You can reach me at
+                <a href="https://twitter.com/dotpwsh">@dotpwsh</a>
+            </p>
+        </div>
+    </div>
+</aside>
+
+<div class="container">
+    <section class="main_content">
+        
+        <article class="article">
+            <h2 class="article--heading">
+                <a href="https://dotpwsh.com/2021/06/03/list-azure-resources-in-terraform-project/">List Azure resources in Terraform project</a>
+            </h2>
+
+            <p class="article--datetime">Thursday, June 03 2021</p>
+
+            <div class="article--body">Some Terraform projects can grow really big and I can be hard to keep track of which Azure resources are in use. Recently I found myself wanting to know which Azure resources our Terraform project use so that I could document them internally. It could also be helpful in case there has been some major changes to some resources in the azurerm Terraform provider that you want to check.
+This, not so little, one-liner will list all azurerm_ and azuread_ resources uniquely in your entire Terraform project if you run it from your root module.</div>
+
+            <ul class="article--tag_list">
+                
+                <li>Powershell</li>
+                
+                <li>Terraform</li>
+                
+            </ul>
+        </article>
+        
+        <article class="article">
+            <h2 class="article--heading">
+                <a href="https://dotpwsh.com/2021/04/23/quicktip-send-output-to-clipboard/">Quicktip: Send output to clipboard</a>
+            </h2>
+
+            <p class="article--datetime">Friday, April 23 2021</p>
+
+            <div class="article--body">Ever found yourself wanting to copy the output from a command to your clipboard without having to select it first? Or maybe copy the contents of a file, like a config file? In this short article we&rsquo;re going to cover how to do that in Windows, MacOS and Linux with Powershell.
+The powershell way Powershell 7 has a built-in cross platform cmdlet for both getting and setting your clipboard.
+PS&gt; &#34;Hello, World!</div>
+
+            <ul class="article--tag_list">
+                
+                <li>Powershell</li>
+                
+                <li>Windows</li>
+                
+                <li>MacOS</li>
+                
+                <li>Linux</li>
+                
+            </ul>
+        </article>
+        
+        <article class="article">
+            <h2 class="article--heading">
+                <a href="https://dotpwsh.com/2021/04/20/powershell-uploading-files-with-multipart/form-data/">Powershell: Uploading files with multipart/form-data</a>
+            </h2>
+
+            <p class="article--datetime">Tuesday, April 20 2021</p>
+
+            <div class="article--body">By default, when you use the -InFile parameter of Invoke-RestMethod Powershell will send it as application/octet-stream. In this short article we&rsquo;ll look at how to send that file with multipart/form-data instead which is what most forms on the web use.
+To send multipart/form-data with Powershell we can use the -Form parameter which takes a hashtable of fields and values.
+I couldn&rsquo;t find a service that would allow us to test file uploads for free, so in this example we&rsquo;re going to use the Confluence Cloud REST API to upload an attachment to a page.</div>
+
+            <ul class="article--tag_list">
+                
+                <li>Powershell</li>
+                
+                <li>Confluence</li>
+                
+            </ul>
+        </article>
+        
+        <article class="article">
+            <h2 class="article--heading">
+                <a href="https://dotpwsh.com/2020/06/18/improving-your-powershell-profile-windows/">Improving Your Powershell Profile (Windows)</a>
+            </h2>
+
+            <p class="article--datetime">Thursday, June 18 2020</p>
+
+            <div class="article--body">For years I&rsquo;ve been a fan of the linux bash, with easy support for ssh-keys, colorized directory listings and git info the prompt. But at the same time, I really love Powershell. I have finally found some usefull Powershell modules that has made me switch completly to Powershell in the terminal.
+Colorized Directory Listings The first module I&rsquo;m going to introduce is the Get-ChildItemColor module by Joon Ro (github.com/joonro/Get-ChildItemColor).
+This module will override the Out-Default cmdlet and give you colorized directory listings when using Get-ChildItem or ls.</div>
+
+            <ul class="article--tag_list">
+                
+                <li>Powershell</li>
+                
+                <li>Windows</li>
+                
+            </ul>
+        </article>
+        
+        <article class="article">
+            <h2 class="article--heading">
+                <a href="https://dotpwsh.com/2020/02/19/getting-started-with-azure-functions/">Getting started with Azure Functions</a>
+            </h2>
+
+            <p class="article--datetime">Wednesday, February 19 2020</p>
+
+            <div class="article--body">Azure Functions is one of Microsofts serverless services that you can setup in Azure. Being serverless means that you dont have to worry about the infrastructure and environment behind it and you will only pay for the capacity that you actually use when the function is running. Traditionally you would have a server that runs 24/7 and consume capacity. Very simplified, serverless will spin up and down as requests comes in.</div>
+
+            <ul class="article--tag_list">
+                
+                <li>Azure Functions</li>
+                
+                <li>Azure CLI</li>
+                
+            </ul>
+        </article>
+        
+        <article class="article">
+            <h2 class="article--heading">
+                <a href="https://dotpwsh.com/2020/02/14/enable-external-users-to-book-meeting-rooms/">Enable External Users to Book Meeting Rooms</a>
+            </h2>
+
+            <p class="article--datetime">Friday, February 14 2020</p>
+
+            <div class="article--body">From time to time you might need to share one or more of your meeting rooms with external users. In this posts we&rsquo;re going through three options for how you can enable this. Other options do exists (like connecting an Office 365 tenant to another and so), but this post is meant for the time you need to give temporary access or only to one or more users.
+Disclaimer: I have only tried this is Exchange Online.</div>
+
+            <ul class="article--tag_list">
+                
+                <li>Exchange Online</li>
+                
+                <li>Powershell</li>
+                
+            </ul>
+        </article>
+        
+        <article class="article">
+            <h2 class="article--heading">
+                <a href="https://dotpwsh.com/2018/12/12/powershell-extract-windows-spotlight-images/">Powershell: Extract Windows Spotlight images</a>
+            </h2>
+
+            <p class="article--datetime">Wednesday, December 12 2018</p>
+
+            <div class="article--body">A very nice feature of Windows 10 is Windows Spotlight who serves beautiful wallpapers on your lock screen every day. It’s a shame these beautiful images are hidden in a system folder somewhere in Windows, so today I’m going to show you how you can extract these images with Powershell. You could perfectly do this manually, but since these images change periodically (haven’t found any info on when) its much easier to just run a script.</div>
+
+            <ul class="article--tag_list">
+                
+                <li>Powershell</li>
+                
+                <li>Windows 10</li>
+                
+            </ul>
+        </article>
+        
+        <article class="article">
+            <h2 class="article--heading">
+                <a href="https://dotpwsh.com/2018/12/07/exchange-online-check-your-tenant-for-forwarding-rules/">Exchange Online: Check your tenant for forwarding rules</a>
+            </h2>
+
+            <p class="article--datetime">Friday, December 07 2018</p>
+
+            <div class="article--body">In this guide we’ll take a look at how you can scan your tenant for “hidden” forwarding rules by using Powershell with Exchange Online.
+Why One technique that is common amongs hackers, that gain access to email accounts, is to setup a forwarding rule for all incomming email. That way they can read all new emails sent to the victim without beeing flagget or detected by audit logs. They can also create rules for emails from a specific address that go to a folder the hacker controls, ie password reset emails.</div>
+
+            <ul class="article--tag_list">
+                
+                <li>Powershell</li>
+                
+                <li>Office 365</li>
+                
+            </ul>
+        </article>
+        
+    </section>
+</div>
+<footer>
+  <p>Copyright &copy; 2022 - dotpwsh.com</p>
+  <p>Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://netlify.com">Netlify</a></p>
+</footer>
+</body>
+
+</html>

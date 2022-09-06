@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Windows 10 on .pwsh</title>
+    <link>https://dotpwsh.com/tags/windows-10/</link>
+    <description>Recent content in Windows 10 on .pwsh</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 12 Dec 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://dotpwsh.com/tags/windows-10/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Powershell: Extract Windows Spotlight images</title>
+      <link>https://dotpwsh.com/2018/12/12/powershell-extract-windows-spotlight-images/</link>
+      <pubDate>Wed, 12 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/2018/12/12/powershell-extract-windows-spotlight-images/</guid>
+      <description>A very nice feature of Windows 10 is Windows Spotlight who serves beautiful wallpapers on your lock screen every day. It’s a shame these beautiful images are hidden in a system folder somewhere in Windows, so today I’m going to show you how you can extract these images with Powershell. You could perfectly do this manually, but since these images change periodically (haven’t found any info on when) its much easier to just run a script.</description>
+    </item>
+    
+  </channel>
+</rss>

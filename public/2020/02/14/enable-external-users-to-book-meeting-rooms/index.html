@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Enable External Users to Book Meeting Rooms | .pwsh</title>
+  <meta
+    name="title"
+    content="Enable External Users to Book Meeting Rooms &middot; .pwsh"
+  />
+
+  
+  <script async defer data-domain="dotpwsh.com" src="https://stats.moiaune.dev/js/plausible.js"></script>
+
+  <link rel="shortcut icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body><header>
+    <h1 class="site-title">
+        <a href="/">.pwsh</a>
+    </h1>
+
+    <nav class="main-nav">
+        <ul class="nav">
+            <li><a class="main-nav__item" href="/">Enter-Home</a></li>
+            <li><a class="main-nav__item" href="/bookmarks">Get-Bookmarks</a></li>
+            <li><a class="main-nav__item" href="/about">Show-About</a></li>
+            <li><a class="main-nav__item" href="/archive">List-Archive</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+<div class="container">
+    <div class="main_content">
+        <article class="article">
+            <h1 class="article--heading">Enable External Users to Book Meeting Rooms</h1>
+
+            <p class="article--datetime">Friday, February 14 2020</p>
+
+            <div class="article--body"><p>From time to time you might need to share one or more of your meeting rooms with external users. In this posts we&rsquo;re going through three options for how you can enable this. Other options do exists (like connecting an Office 365 tenant to another and so), but this post is meant for the time you need to give temporary access or only to one or more users.</p>
+<p><em>Disclaimer: I have only tried this is Exchange Online.</em></p>
+<h2 id="enable-processing-of-external-meeting-messages">Enable processing of external meeting messages</h2>
+<p>For Exchange Online to even consider accepting external messages we must enable <code>ProcessExternalMeetingMessages</code> via Powershell.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">Set-CalendarProcessing</span> <span class="n">-Identity</span> <span class="s2">&#34;Meeting Room Name&#34;</span> <span class="p">`</span>
+<span class="n">-ProcessExternalMeetingMessages</span> <span class="nv">$true</span>
+</code></pre></div><p>This will open up for EVERYONE to be able to book the meeting room. Most likely you&rsquo;d want to limit it to either some users or domains. We&rsquo;ll take a look at that next.</p>
+<h2 id="limit-external-users">Limit external users</h2>
+<p>There are a few ways we can limit which of our external users that can book the meeting room.</p>
+<ul>
+<li>Mail-enabled Security Groups</li>
+<li>Transport Rules</li>
+<li>Set-CalendarProcessing</li>
+</ul>
+<h3 id="1-mail-enabled-security-groups">1. Mail-enabled Security Groups</h3>
+<blockquote>
+<p>NOTE: I assume you already have either a distribution group or mail-enabled security group for all your internal users or know how to create one.</p>
+</blockquote>
+<p>The first solution we&rsquo;re looking at is mail-enabled security groups in Office 365. Most likely you already have some sort of distribution group or mail-enabled security group with all of your internal users. In addition we&rsquo;re going to add another mail-enabled security group for our external users. This is only viable if the amount of users is not too high, because you must add/remove them manually.</p>
+<p>Now, this is <strong>IMPORTANT</strong>. You must create the mail-enabled security group in Office 365 directly. If you have a hybrid setup and create the group in Active Directory, you will not be able to add the external user later.</p>
+<h4 id="create-group-in-office-365">Create group in Office 365</h4>
+<ol>
+<li>Go to <strong>Groups -&gt; Add a group</strong></li>
+<li>Choose <strong>Mail-enabled security</strong></li>
+<li>Name your group something appropriate (e.g &ldquo;Meeting Room External Booking&rdquo;) and give it a description</li>
+<li>Give it an email address</li>
+<li>Click on <strong>Create group</strong></li>
+</ol>
+<h4 id="set-bookinpolicy-on-meeting-room">Set BookInPolicy on meeting room</h4>
+<p>Our next step is to add the group we just created to the <code>BookInPolicy</code> for our meeting room.</p>
+<p>Remember I assumed you had a group for all your internal users? Well, we&rsquo;re going to use it now (in this example we&rsquo;ll call it &ldquo;Company Internal Users&rdquo;). If your meeting room does not already have a BookInPolicy we must add both groups (internals and externals) and set <code>AllBookInPolicy</code> to false.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">Set-CalendarProcessing</span> <span class="n">-Identity</span> <span class="s2">&#34;Meeting Room Name&#34;</span> <span class="p">`</span>
+<span class="n">-AllBookInPolicy</span> <span class="nv">$false</span> <span class="p">`</span>
+<span class="n">-BookInPolicy</span> <span class="s2">&#34;Company Internal Users&#34;</span><span class="p">,</span> <span class="s2">&#34;Meeting Room External Booking&#34;</span>
+</code></pre></div><p>This will set both groups as BookInPolicy meaning that only users that is member of either groups are allowed for booking. Everyone else will get a rejected message.</p>
+<h4 id="add-external-user-to-our-group">Add external user to our group</h4>
+<p>Let&rsquo;s finish off by adding our external users. We do so by invited them in Azure Active Directory as guests and then add them to the mail-enabled security group we created earlier.</p>
+<ol>
+<li>Go to <strong>Azure Active Directory -&gt; Users</strong></li>
+<li>Click on <strong>New guest user</strong></li>
+<li>Make sure <strong>Invite user</strong> is checked</li>
+<li>Fill in necessary information
+<ol>
+<li><strong>Name:</strong> DisplayName</li>
+<li><strong>Email Address:</strong> The guest&rsquo;s external email address</li>
+<li><strong>Groups:</strong> Unfortunately you cannot select our group from here, so leave this as default</li>
+<li><strong>Role:</strong> User</li>
+<li><strong>Block sign in:</strong> Must be &ldquo;No&rdquo;</li>
+</ol>
+</li>
+<li>Click on <strong>Invite</strong></li>
+<li>Go back to <strong>Office 365 -&gt; Groups</strong></li>
+<li>Click on &ldquo;Meeting Room External Booking&rdquo; and go to <strong>Members</strong> tab</li>
+<li>Click <strong>View and manage members</strong></li>
+<li>Click <strong>+ Add members</strong></li>
+<li>Select your invited guest(s) in the list and click <strong>Save</strong></li>
+</ol>
+<p>They should now be able to book the meeting room this was setup for, even though they are external.</p>
+<h3 id="2-transport-rules">2. Transport Rules</h3>
+<blockquote>
+<p>NOTE: This only works if <code>AllBookInPolicy</code> is true and <code>BookInPolicy</code> is empty.</p>
+</blockquote>
+<p>Since we enabled <code>ProcessExternalMeetingMessages</code> everyone has access to book our meeting room. Instead of limited whom by using groups we can create a transport rule that states something in the line of: &ldquo;If email is to this meeting room and is from outside, delete it. Unless its from @domain.com/user@domain.com&rdquo;.</p>
+<h4 id="powershell">Powershell</h4>
+<p>This can easily be achieved with Powershell. Change <code>SentTo</code> and <code>ExceptIfSenderDomainIs</code> with your values.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">New-TransportRule</span> <span class="n">-Name</span> <span class="s2">&#34;Meeting Room External Booking&#34;</span> <span class="p">`</span>
+<span class="n">-SentTo</span> <span class="s2">&#34;meeting_room@contoso.com&#34;</span> <span class="p">`</span>
+<span class="n">-ExceptIfSenderDomainIs</span> <span class="nb">external-corp</span><span class="p">.</span><span class="n">com</span> <span class="p">`</span>
+<span class="n">-FromScope</span> <span class="n">NotInOrganization</span> <span class="p">`</span>
+<span class="n">-DeleteMessage</span> <span class="nv">$true</span>
+</code></pre></div><h4 id="exchange-admin-center">Exchange Admin Center</h4>
+<p>If you&rsquo;re not comfortable with Powershell, you can do it in the Exchange Admin Center in Office 365.</p>
+<ol>
+<li>Choose <strong>mail flow</strong> in the menu to the left</li>
+<li>Make sure you&rsquo;re on the <strong>rules</strong> tab</li>
+<li>Click the <strong>+</strong>-symbol and choose <strong>Create a new rule</strong></li>
+</ol>
+<p><img src="/images/external-booking-transport-rule.png" alt="External Booking Transport Rule"></p>
+<p>Save and you&rsquo;re done.</p>
+<h3 id="3-set-calendarprocessing">3. Set-CalendarProcessing</h3>
+<p>Our last option is to set the external user(s) directly in Powershell with <code>Set-CalendarProcessing</code>.</p>
+<blockquote>
+<p>NOTE: This does not support whole domains only single users, just like using a group.</p>
+</blockquote>
+<p>What we will do is to add our external user(s) to the BookInPolicy explicit instead of using a group like in the first option. Using a group is a lot more mangeable since you can just add/remove user(s) in the group and it also give better visibility. But if you for some reason wont use a group, this is how to set it with set-calendarprocessing.</p>
+<p>Note that we must disable <code>AllBookInPolicy</code> for the <code>BookInPolicy</code> to be activated. That means you have to add a group of everyone else that also should be able to book our meeting room, just like in option 1 where we added &ldquo;Company Internal Users&rdquo;.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">Set-CalendarProcessing</span> <span class="n">-Identity</span> <span class="s2">&#34;Meeting Room Name&#34;</span> <span class="p">`</span>
+<span class="n">-AllBookInPolicy</span> <span class="nv">$false</span> <span class="p">`</span>
+<span class="n">-BookInPolicy</span> <span class="s2">&#34;Company Internal Users&#34;</span><span class="p">,</span> <span class="s2">&#34;user@external-corp.com&#34;</span>
+</code></pre></div><p>Now <a href="mailto:user@external-corp.com">user@external-corp.com</a> should be able to book our meeting room.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>We have looked at three options for how we can allow external users to book our meeting room. Out of these options, I would recommend option 1 if there&rsquo;s only specific users. Options 2 would be good for allowing whole domains. Options 3 is just an option. It works, but it does not have any benefits over the others, which are easier to manage.</p>
+</div>
+
+            <ul class="article--tag_list">
+                
+                <li>Exchange Online</li>
+                
+                <li>Powershell</li>
+                
+            </ul>
+        </article>
+        </section>
+    </div>
+</div>
+
+<footer>
+  <p>Copyright &copy; 2022 - dotpwsh.com</p>
+  <p>Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://netlify.com">Netlify</a></p>
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Powershell on .pwsh</title>
+    <link>https://dotpwsh.com/tags/powershell/</link>
+    <description>Recent content in Powershell on .pwsh</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 03 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://dotpwsh.com/tags/powershell/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>List Azure resources in Terraform project</title>
+      <link>https://dotpwsh.com/2021/06/03/list-azure-resources-in-terraform-project/</link>
+      <pubDate>Thu, 03 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/2021/06/03/list-azure-resources-in-terraform-project/</guid>
+      <description>Some Terraform projects can grow really big and I can be hard to keep track of which Azure resources are in use. Recently I found myself wanting to know which Azure resources our Terraform project use so that I could document them internally. It could also be helpful in case there has been some major changes to some resources in the azurerm Terraform provider that you want to check.
+This, not so little, one-liner will list all azurerm_ and azuread_ resources uniquely in your entire Terraform project if you run it from your root module.</description>
+    </item>
+    
+    <item>
+      <title>Quicktip: Send output to clipboard</title>
+      <link>https://dotpwsh.com/2021/04/23/quicktip-send-output-to-clipboard/</link>
+      <pubDate>Fri, 23 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/2021/04/23/quicktip-send-output-to-clipboard/</guid>
+      <description>Ever found yourself wanting to copy the output from a command to your clipboard without having to select it first? Or maybe copy the contents of a file, like a config file? In this short article we&amp;rsquo;re going to cover how to do that in Windows, MacOS and Linux with Powershell.
+The powershell way Powershell 7 has a built-in cross platform cmdlet for both getting and setting your clipboard.
+PS&amp;gt; &amp;#34;Hello, World!</description>
+    </item>
+    
+    <item>
+      <title>Powershell: Uploading files with multipart/form-data</title>
+      <link>https://dotpwsh.com/2021/04/20/powershell-uploading-files-with-multipart/form-data/</link>
+      <pubDate>Tue, 20 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/2021/04/20/powershell-uploading-files-with-multipart/form-data/</guid>
+      <description>By default, when you use the -InFile parameter of Invoke-RestMethod Powershell will send it as application/octet-stream. In this short article we&amp;rsquo;ll look at how to send that file with multipart/form-data instead which is what most forms on the web use.
+To send multipart/form-data with Powershell we can use the -Form parameter which takes a hashtable of fields and values.
+I couldn&amp;rsquo;t find a service that would allow us to test file uploads for free, so in this example we&amp;rsquo;re going to use the Confluence Cloud REST API to upload an attachment to a page.</description>
+    </item>
+    
+    <item>
+      <title>Improving Your Powershell Profile (Windows)</title>
+      <link>https://dotpwsh.com/2020/06/18/improving-your-powershell-profile-windows/</link>
+      <pubDate>Thu, 18 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/2020/06/18/improving-your-powershell-profile-windows/</guid>
+      <description>For years I&amp;rsquo;ve been a fan of the linux bash, with easy support for ssh-keys, colorized directory listings and git info the prompt. But at the same time, I really love Powershell. I have finally found some usefull Powershell modules that has made me switch completly to Powershell in the terminal.
+Colorized Directory Listings The first module I&amp;rsquo;m going to introduce is the Get-ChildItemColor module by Joon Ro (github.com/joonro/Get-ChildItemColor).
+This module will override the Out-Default cmdlet and give you colorized directory listings when using Get-ChildItem or ls.</description>
+    </item>
+    
+    <item>
+      <title>Enable External Users to Book Meeting Rooms</title>
+      <link>https://dotpwsh.com/2020/02/14/enable-external-users-to-book-meeting-rooms/</link>
+      <pubDate>Fri, 14 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/2020/02/14/enable-external-users-to-book-meeting-rooms/</guid>
+      <description>From time to time you might need to share one or more of your meeting rooms with external users. In this posts we&amp;rsquo;re going through three options for how you can enable this. Other options do exists (like connecting an Office 365 tenant to another and so), but this post is meant for the time you need to give temporary access or only to one or more users.
+Disclaimer: I have only tried this is Exchange Online.</description>
+    </item>
+    
+    <item>
+      <title>Powershell: Extract Windows Spotlight images</title>
+      <link>https://dotpwsh.com/2018/12/12/powershell-extract-windows-spotlight-images/</link>
+      <pubDate>Wed, 12 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/2018/12/12/powershell-extract-windows-spotlight-images/</guid>
+      <description>A very nice feature of Windows 10 is Windows Spotlight who serves beautiful wallpapers on your lock screen every day. It’s a shame these beautiful images are hidden in a system folder somewhere in Windows, so today I’m going to show you how you can extract these images with Powershell. You could perfectly do this manually, but since these images change periodically (haven’t found any info on when) its much easier to just run a script.</description>
+    </item>
+    
+    <item>
+      <title>Exchange Online: Check your tenant for forwarding rules</title>
+      <link>https://dotpwsh.com/2018/12/07/exchange-online-check-your-tenant-for-forwarding-rules/</link>
+      <pubDate>Fri, 07 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/2018/12/07/exchange-online-check-your-tenant-for-forwarding-rules/</guid>
+      <description>In this guide we’ll take a look at how you can scan your tenant for “hidden” forwarding rules by using Powershell with Exchange Online.
+Why One technique that is common amongs hackers, that gain access to email accounts, is to setup a forwarding rule for all incomming email. That way they can read all new emails sent to the victim without beeing flagget or detected by audit logs. They can also create rules for emails from a specific address that go to a folder the hacker controls, ie password reset emails.</description>
+    </item>
+    
+  </channel>
+</rss>

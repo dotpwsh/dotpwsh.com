@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Terraform on .pwsh</title>
+    <link>https://dotpwsh.com/tags/terraform/</link>
+    <description>Recent content in Terraform on .pwsh</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 03 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://dotpwsh.com/tags/terraform/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>List Azure resources in Terraform project</title>
+      <link>https://dotpwsh.com/2021/06/03/list-azure-resources-in-terraform-project/</link>
+      <pubDate>Thu, 03 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/2021/06/03/list-azure-resources-in-terraform-project/</guid>
+      <description>Some Terraform projects can grow really big and I can be hard to keep track of which Azure resources are in use. Recently I found myself wanting to know which Azure resources our Terraform project use so that I could document them internally. It could also be helpful in case there has been some major changes to some resources in the azurerm Terraform provider that you want to check.
+This, not so little, one-liner will list all azurerm_ and azuread_ resources uniquely in your entire Terraform project if you run it from your root module.</description>
+    </item>
+    
+  </channel>
+</rss>

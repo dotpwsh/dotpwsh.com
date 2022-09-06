@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html><head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Powershell: Uploading files with multipart/form-data | .pwsh</title>
+  <meta
+    name="title"
+    content="Powershell: Uploading files with multipart/form-data &middot; .pwsh"
+  />
+
+  
+  <script async defer data-domain="dotpwsh.com" src="https://stats.moiaune.dev/js/plausible.js"></script>
+
+  <link rel="shortcut icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body><header>
+    <h1 class="site-title">
+        <a href="/">.pwsh</a>
+    </h1>
+
+    <nav class="main-nav">
+        <ul class="nav">
+            <li><a class="main-nav__item" href="/">Enter-Home</a></li>
+            <li><a class="main-nav__item" href="/bookmarks">Get-Bookmarks</a></li>
+            <li><a class="main-nav__item" href="/about">Show-About</a></li>
+            <li><a class="main-nav__item" href="/archive">List-Archive</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+<div class="container">
+    <div class="main_content">
+        <article class="article">
+            <h1 class="article--heading">Powershell: Uploading files with multipart/form-data</h1>
+
+            <p class="article--datetime">Tuesday, April 20 2021</p>
+
+            <div class="article--body"><p>By default, when you use the <code>-InFile</code> parameter of <code>Invoke-RestMethod</code> Powershell will send it as <code>application/octet-stream</code>. In this short article we&rsquo;ll look at how to send that file with <code>multipart/form-data</code> instead which is what most forms on the web use.</p>
+<p>To send <code>multipart/form-data</code> with Powershell we can use the <code>-Form</code> parameter which takes a hashtable of fields and values.</p>
+<p>I couldn&rsquo;t find a service that would allow us to test file uploads for free, so in this example we&rsquo;re going to use the Confluence Cloud REST API to upload an attachment to a page.</p>
+<p><strong>TIP:</strong> If you want to test out <code>multipart/form-data</code> without file uploads httpbin has an endpoint for that: <a href="https://httpbin.org/post">https://httpbin.org/forms/post</a>. Just skip the authentication section and replace the url with this and the form object to reflect the fields on httpbin.</p>
+<h2 id="authentication">Authentication</h2>
+<p>Since we&rsquo;ll be using the Confluence Cloud REST API, we must setup our authentication. Since this is not the main part i&rsquo;ll show you a quick and simple way. If you want more information you can read more here: <a href="https://developer.atlassian.com/cloud/confluence/rest/intro/#auth">Confluence Cloud - Authentication and authorization</a>.</p>
+<p>Confluence REST API use Basic Authentication.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nv">$BaseURL</span> <span class="p">=</span> <span class="s2">&#34;https://&lt;your_atlassian_domain&gt;.atlassian.net&#34;</span>
+
+<span class="nv">$credential</span> <span class="p">=</span> <span class="nb">Get-Credential</span>
+<span class="nv">$authString</span> <span class="p">=</span> <span class="s2">&#34;{0}:{1}&#34;</span> <span class="o">-f</span> <span class="p">(</span><span class="nv">$Credential</span><span class="p">.</span><span class="n">UserName</span><span class="p">,</span> <span class="p">(</span><span class="nb">ConvertFrom-SecureString</span> <span class="nv">$Credential</span><span class="p">.</span><span class="n">Password</span> <span class="n">-AsPlainText</span><span class="p">))</span>
+<span class="nv">$b64Encoded</span> <span class="p">=</span> <span class="no">[System.Convert]</span><span class="p">::</span><span class="n">ToBase64String</span><span class="p">(</span><span class="no">[System.Text.Encoding]</span><span class="p">::</span><span class="n">ASCII</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="nv">$ConfBasicAuthString</span><span class="p">))</span>
+<span class="nv">$headers</span> <span class="p">=</span> <span class="p">@{</span>
+    <span class="s2">&#34;Authorization&#34;</span>     <span class="p">=</span> <span class="s2">&#34;Basic </span><span class="p">$(</span><span class="nv">$b64Encoded</span><span class="p">)</span><span class="s2">&#34;</span>
+    <span class="s2">&#34;X-Atlassian-Token&#34;</span> <span class="p">=</span> <span class="s2">&#34;nocheck&#34;</span>
+    <span class="s2">&#34;Content-Type&#34;</span>      <span class="p">=</span> <span class="s2">&#34;multipart/form-data&#34;</span>
+<span class="p">}</span>
+</code></pre></div><p>This is all we need to setup before we can run request against the REST API.</p>
+<h2 id="uploading-an-image">Uploading an image</h2>
+<p>Confluence allows us to set three fields in our form:</p>
+<ul>
+<li>file (required)</li>
+<li>comment (optional)</li>
+<li>minorEdit (required)</li>
+</ul>
+<p>So, for us to upload a file we must provide the <code>file</code> field in our form object. When working with files we can use the <code>Get-Item</code> cmdlet to get the file we want to upload.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nv">$form</span> <span class="p">=</span> <span class="p">@{</span>
+    <span class="n">file</span>      <span class="p">=</span> <span class="nb">Get-Item</span> <span class="n">-Path</span> <span class="nv">$filename</span>
+    <span class="n">minorEdit</span> <span class="p">=</span> <span class="s2">&#34;true&#34;</span>
+<span class="p">}</span>
+</code></pre></div><p>This is not unique for Confluence. Web-forms that allow file upload will have a field with a <code>type=&quot;file&quot;</code> and a <code>name=&quot;my_file&quot;</code>. In your form object you would replace &ldquo;file&rdquo; with &ldquo;my_file&rdquo;.</p>
+<p>When we have defined our form, we can submit it with <code>Invoke-RestMethod</code> or <code>Invoke-WebRequest</code> by setting the <code>-Form</code> parameter to our <code>$form</code> object.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="nb">Invoke-RestMethod</span> <span class="n">-Uri</span> <span class="s2">&#34;</span><span class="p">$(</span><span class="nv">$BaseURL</span><span class="p">)</span><span class="s2">/wiki/rest/api/content/{id}/child/attachment&#34;</span> <span class="n">-Method</span> <span class="n">PUT</span> <span class="n">-Headers</span> <span class="nv">$headers</span> <span class="n">-Form</span> <span class="nv">$form</span>
+</code></pre></div><h2 id="confluence-spesific-caveats">Confluence spesific caveats</h2>
+<p>There are some configuration options that are set, but not mentioned.</p>
+<p>Confluence itself uses XSRF when posting form-data, so to use this with the REST API we must provide the <code>X-Atlassian-Token: nocheck</code> header for it to bypass it.</p>
+<p>We also use the <code>PUT</code> method instead of <code>POST</code> which allows us to add a new attachment if it does not exist, or update it if it already exists.</p>
+</div>
+
+            <ul class="article--tag_list">
+                
+                <li>Powershell</li>
+                
+                <li>Confluence</li>
+                
+            </ul>
+        </article>
+        </section>
+    </div>
+</div>
+
+<footer>
+  <p>Copyright &copy; 2022 - dotpwsh.com</p>
+  <p>Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://netlify.com">Netlify</a></p>
+</footer>
+</body>
+
+</html>

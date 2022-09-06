@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on .pwsh</title>
+    <link>https://dotpwsh.com/tags/</link>
+    <description>Recent content in Tags on .pwsh</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 03 Jun 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://dotpwsh.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Powershell</title>
+      <link>https://dotpwsh.com/tags/powershell/</link>
+      <pubDate>Thu, 03 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/tags/powershell/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Terraform</title>
+      <link>https://dotpwsh.com/tags/terraform/</link>
+      <pubDate>Thu, 03 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/tags/terraform/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>https://dotpwsh.com/tags/linux/</link>
+      <pubDate>Fri, 23 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>MacOS</title>
+      <link>https://dotpwsh.com/tags/macos/</link>
+      <pubDate>Fri, 23 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/tags/macos/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Windows</title>
+      <link>https://dotpwsh.com/tags/windows/</link>
+      <pubDate>Fri, 23 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/tags/windows/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Confluence</title>
+      <link>https://dotpwsh.com/tags/confluence/</link>
+      <pubDate>Tue, 20 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/tags/confluence/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Azure CLI</title>
+      <link>https://dotpwsh.com/tags/azure-cli/</link>
+      <pubDate>Wed, 19 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/tags/azure-cli/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Azure Functions</title>
+      <link>https://dotpwsh.com/tags/azure-functions/</link>
+      <pubDate>Wed, 19 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/tags/azure-functions/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Exchange Online</title>
+      <link>https://dotpwsh.com/tags/exchange-online/</link>
+      <pubDate>Fri, 14 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/tags/exchange-online/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Windows 10</title>
+      <link>https://dotpwsh.com/tags/windows-10/</link>
+      <pubDate>Wed, 12 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/tags/windows-10/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Office 365</title>
+      <link>https://dotpwsh.com/tags/office-365/</link>
+      <pubDate>Fri, 07 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://dotpwsh.com/tags/office-365/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
