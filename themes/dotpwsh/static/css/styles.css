@@ -667,6 +667,10 @@ header h1 {
 }
 
 header h1 a {
+    display: flex;
+    gap: .8rem;
+    align-items: center;
+
     color: #ffffff;
     text-decoration: none;
 }
