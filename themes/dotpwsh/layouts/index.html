@@ -1,0 +1,41 @@
+{{ define "main" }}
+
+<aside class="introduction">
+    <!-- <img class="introduction__image" src="/images/avatar.jpg" alt="Mads Moi-Aune"> -->
+    <div class="introduction__content">
+        <h2 class="introduction__title">Hei, I'm Mads 👋</h2>
+        <div class="introduction__body">
+            <p>
+                I'm an Automation Engineer from Norway 🇳🇴 spending my days writing code. I like to dabble in
+                Powershell, so I created this blog as way to store and share my experiences with Powershell.
+            </p>
+            <p>
+                You can reach me at
+                <a href="https://twitter.com/{{ .Site.Params.Twitter }}">@{{ .Site.Params.Twitter }}</a>
+            </p>
+        </div>
+    </div>
+</aside>
+
+<div class="container">
+    <section class="main_content">
+        {{ range.Site.RegularPages }}
+        <article class="article">
+            <h2 class="article--heading">
+                <a href="{{ .Permalink }}">{{ .Title }}</a>
+            </h2>
+
+            <p class="article--datetime">{{ .Date.Format "Monday, January 02 2006" }}</p>
+
+            <div class="article--body">{{ .Summary }}</div>
+
+            <ul class="article--tag_list">
+                {{ range $index, $val := .Params.Tags }}
+                <li>{{ $val }}</li>
+                {{ end }}
+            </ul>
+        </article>
+        {{ end }}
+    </section>
+</div>
+{{ end }}
