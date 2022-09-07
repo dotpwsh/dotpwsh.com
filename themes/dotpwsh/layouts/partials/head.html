@@ -18,6 +18,19 @@
         content="{{ with .Params.Description }}{{ . }}{{ else }}{{ $.Site.Params.Description }}{{ end }}" />
     <meta property="og:image" content="{{ .Site.BaseURL }}assets/opengraph_image.png" />
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@dotpwsh" />
+    <meta name="twitter:creator" content="@dotpwsh" />
+    <meta name="twitter:url" content="{{ .Permalink }}" />
+    <meta name="twitter:title"
+        content="{{ if .IsHome -}}{{ .Site.Title }}{{- else -}}{{ .Title }} - {{ .Site.Title }}{{- end }}" />
+    <meta name="twitter:description"
+        content="{{ with .Params.Description }}{{ . }}{{ else }}{{ $.Site.Params.Description }}{{ end }}" />
+    <meta name="twitter:image" content="{{ .Site.BaseURL }}assets/opengraph_image.png" />
+    <link rel="canonical" href="{{ .Permalink }}" />
+
+
     <!-- plausible: self-hosted analytics -->
     <script async defer data-domain="dotpwsh.com" src="https://stats.moiaune.dev/js/plausible.js"></script>
 
