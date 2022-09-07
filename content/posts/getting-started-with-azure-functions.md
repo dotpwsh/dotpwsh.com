@@ -1,5 +1,6 @@
 ---
 title: 'Getting started with Azure Functions'
+description: "Azure Functions is one of Microsofts serverless services that you can setup in Azure. Being serverless means that you dont have to worry about the infrastructure and environment behind it and you will only pay for the capacity that you actually use when the function is running. In this articles we'll look at how to setup an Azure Functions App"
 date: 2020-02-19T00:00:00
 tags: ['Azure Functions', 'Azure CLI']
 published: true

@@ -1,5 +1,6 @@
 ---
 title: 'Improving Your Powershell Profile (Windows)'
+description: "For years I've been a fan of the linux bash, with easy support for ssh-keys, colorized directory listings and git info the prompt. But at the same time, I really love Powershell. I have finally found some usefull Powershell modules that has made me switch completly to Powershell in the terminal."
 date: 2020-06-18T00:00:00
 tags: ['Powershell', 'Windows']
 published: true

@@ -1,5 +1,6 @@
 ---
 title: 'Enable External Users to Book Meeting Rooms'
+description: "From time to time you might need to share one or more of your meeting rooms with external users. In this posts we're going through three options for how you can enable this. Other options do exists (like connecting an Office 365 tenant to another and so), but this post is meant for the time you need to give temporary access or only to one or more users."
 date: 2020-02-14T00:00:00
 tags: ['Exchange Online', 'Powershell']
 ---

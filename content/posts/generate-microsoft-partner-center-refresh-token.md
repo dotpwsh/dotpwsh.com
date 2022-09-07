@@ -1,5 +1,6 @@
 ---
 title: "Generate Microsoft Partner Center Refresh Token"
+description: "Microsoft Partner Center is a portal where you can manage all of your CSP customers and can give you a lot of access and power to do so. Therefor you should naturally have great security on the users that has access to this portal. Like MFA for example. So how can we then do unattended authentication and automate some of the tasks in Partner Center?"
 date: 2021-11-03T23:22:03+01:00
 tags: ["Powershell", "Microsoft Partner Center"]
 ---

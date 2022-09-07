@@ -1,5 +1,6 @@
 ---
 title: 'Visualize Azure environment after deployment'
+description: "In this article we're going to take a look at a Powershell module that can create a visualization of your Azure environment, and we're implementing it into Azure Pipelines to automatically run when a new deployment is done."
 date: 2021-06-02T00:00:00
 tags: ['Powershell', 'Azure Pipeline', 'Terraform']
 draft: true

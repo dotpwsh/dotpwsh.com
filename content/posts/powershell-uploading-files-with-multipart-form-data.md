@@ -1,5 +1,6 @@
 ---
 title: 'Powershell: Uploading files with multipart/form-data'
+description: "By default, when you use the `-InFile` parameter of `Invoke-RestMethod` Powershell will send it as `application/octet-stream`. In this short article we'll look at how to send that file with `multipart/form-data` instead which is what most forms on the web use."
 date: 2021-04-20T00:00:00
 tags: ['Powershell', 'Confluence']
 ---

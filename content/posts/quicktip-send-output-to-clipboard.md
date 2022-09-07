@@ -1,5 +1,6 @@
 ---
 title: 'Quicktip: Send output to clipboard'
+description: "Ever found yourself wanting to copy the output from a command to your clipboard without having to select it first? Or maybe copy the contents of a file, like a config file? In this short article we're going to cover how to do that in Windows, MacOS and Linux with Powershell."
 date: 2021-04-23T00:00:00
 tags: ['Powershell', 'Windows', 'MacOS', 'Linux']
 ---

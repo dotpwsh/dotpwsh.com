@@ -1,5 +1,6 @@
 ---
 title: 'Exchange Online: Check your tenant for forwarding rules'
+description: "In this guide we’ll take a look at how you can scan your tenant for “hidden” forwarding rules by using Powershell with Exchange Online."
 date: 2018-12-07T00:00:00
 tags: ['Powershell', 'Office 365']
 ---

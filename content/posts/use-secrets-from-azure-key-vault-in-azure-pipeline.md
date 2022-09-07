@@ -1,5 +1,6 @@
 ---
 title: "Use secrets from Azure Key Vault in Azure Pipelines"
+description: "The chance of you needing to use some kind of secrets in your Azure Pipeline is big. At some point your pipeline wants to talk to a third party service and there will be tokens or some kind of credential involved. In this article we're taking a look at how to fetch and use secrets from Azure Key Vault in your pipeline."
 date: 2021-05-10T00:00:00
 tags: ['Powershell', 'Bash', 'Azure Pipeline', 'Azure Key Vault', 'Terraform']
 draft: true

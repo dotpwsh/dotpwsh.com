@@ -1,5 +1,6 @@
 ---
 title: 'Powershell: Extract Windows Spotlight images'
+description: "A very nice feature of Windows 10 is Windows Spotlight who serves beautiful wallpapers on your lock screen every day. It’s a shame these beautiful images are hidden in a system folder somewhere in Windows, so today I’m going to show you how you can extract these images with Powershell."
 date: 2018-12-12T00:00:00
 tags: ['Powershell', 'Windows 10']
 ---

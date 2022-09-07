@@ -1,5 +1,6 @@
 ---
 title: 'Azure: Getting started with Jekyll static website hosting'
+description: "In this multipart series we're going through the steps of hosting a jekyll static website in Azure and automate as much of the process as possible. We will cover everything from installing Jekyll to setting up custom domain (with HTTPS) and analytics."
 date: 2019-11-29T00:00:00
 tags: ['Azure', 'Powershell']
 draft: true
@@ -53,7 +54,7 @@ We're going to use two of the services offered by Azure DevOps;
 - Azure Repos
 - Azure Pipelines
 
-**Azure Repos** is Microsoft's answer to Github (even though they now own both). This is where we're going to store our code.  
+**Azure Repos** is Microsoft's answer to Github (even though they now own both). This is where we're going to store our code.
 **Azure Pipelines** is a service to setup Build and Release Pipelines (CI/CD). We're going to use this to trigger the build and upload to Azure Storage when we push commits to the master branch.
 
 ### Create new project
