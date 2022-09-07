@@ -8,28 +8,15 @@
         content="{{ if .IsHome -}}{{ .Site.Title }}{{- else -}}{{ .Title }} - {{ .Site.Title }}{{- end }}" />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:title"
-        content="{{ if .IsHome -}}{{ .Site.Title }}{{- else -}}{{ .Title }} - {{ .Site.Title }}{{- end }}" />
-    <meta property="og:description"
-        content="{{ with .Params.Description }}{{ . }}{{ else }}{{ $.Site.Params.Description }}{{ end }}" />
     <meta property="og:site_name"
         content="{{ if .IsHome -}}{{ .Site.Title }}{{- else -}}{{ .Title }} - {{ .Site.Title }}{{- end }}" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{ .Permalink }}" />
-    <meta property="og:image" content="{{ .Site.BaseURL }}assets/opengraph_image.png" />
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@dotpwsh" />
-    <meta name="twitter:creator" content="@dotpwsh" />
-    <meta name="twitter:url" content="{{ .Permalink }}" />
-    <meta name="twitter:title"
+    <meta property="og:title"
         content="{{ if .IsHome -}}{{ .Site.Title }}{{- else -}}{{ .Title }} - {{ .Site.Title }}{{- end }}" />
-    <meta name="twitter:description"
+    <meta property="og:description"
         content="{{ with .Params.Description }}{{ . }}{{ else }}{{ $.Site.Params.Description }}{{ end }}" />
-    <meta name="twitter:image" content="{{ .Site.BaseURL }}assets/opengraph_image.png" />
-    <link rel="canonical" href="{{ .Permalink }}" />
-
+    <meta property="og:image" content="{{ .Site.BaseURL }}assets/opengraph_image.png" />
 
     <!-- plausible: self-hosted analytics -->
     <script async defer data-domain="dotpwsh.com" src="https://stats.moiaune.dev/js/plausible.js"></script>
