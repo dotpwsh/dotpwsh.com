@@ -3,6 +3,7 @@ title: 'Web requests with basic authentication in Powershell'
 description: "HTTP Basic Authentication is one of many authentication schemes supported by the HTTP protocol, and is a very common option when authenticating to a web service. Let's explore some examples in Powershell."
 date: 2022-07-05T00:00:00
 tags: ['Powershell', 'Basic Authentication']
+image: "web-requests-with-basic-authentication-in-powershell"
 ---
 
 HTTP Basic Authentication is one of many authentication schemes supported by the HTTP protocol, and is a very common option when authenticating to a web service. The basic authentication scheme is very simple and consists of generating a base64 token from your username and password seperated by a colon (`:`) and putting the token in an `Authorization` HTTP header. Let's explore some examples in Powershell.

@@ -3,6 +3,7 @@ title: "Generate Access Tokens for Microsoft Services With Powershell"
 description: "As automators we often need to interact with REST API's and if you are working with Microsoft Azure you probably found yourself dealing with several of Microsoft's services i.e Microsoft Graph, Azure Resource Manager or Partner Center. In this article we're going to take a look at two flows for how we can authenticate with the different services."
 date: 2022-02-09T15:50:44+01:00
 tags: ["Powershell", "REST API", "Microsoft"]
+image: "generate-access-tokens-for-microsoft-services-with-powershell"
 ---
 
 As automators we often need to interact with REST API's and if you are working with Microsoft Azure you probably found yourself dealing with several of Microsoft's services i.e Microsoft Graph, Azure Resource Manager or Partner Center. Many of these services is supported by a Powershell module that handles authentication etc.. But I have found lately that more often than not it's actually easier to just work with the raw REST API, especially for cross-platform development. In this article we're going to take a look at two flows for how we can authenticate with the different services.
