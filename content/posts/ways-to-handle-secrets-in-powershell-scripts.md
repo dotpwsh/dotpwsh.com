@@ -3,7 +3,7 @@ title: "Ways to Handle Secrets in Powershell Scripts"
 description: "In this article I'm briefly looking at some options for securely handling secrets in Powershell scripts, so that we can avoid hard coded credentials and strengthen our security"
 date: 2022-09-16T20:29:26+02:00
 tags: ["Powershell", "Azure", "Security"]
-image: "ways-to-handle-secrets-in-powershell-scripts"
+image: "ways-to-handle-secrets-in-powershell-scripts.svg"
 ---
 
 In this article I'm briefly looking at some options for securely handling secrets in Powershell scripts, so that we can avoid hard coded credentials and strengthen our security.

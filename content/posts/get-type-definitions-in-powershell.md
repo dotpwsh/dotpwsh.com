@@ -3,7 +3,7 @@ title: 'Get type definitions in Powershell'
 description: "Today I went back to some Powershell scripting with the Az module and it frustrated me that I wasn't easily able to know what properties `Get-AzADGroup` (or any of the other Az cmdlets) returned to me without actually invoking the cmdlet."
 tags: ['Powershell']
 date: 2021-08-27T09:43:57+02:00
-image: "get-type-definitions-in-powershell"
+image: "get-type-definitions-in-powershell.svg"
 ---
 
 Today I went back to some Powershell scripting with the Az module and it frustrated me that I wasn't easily able to know what properties `Get-AzADGroup` (or any of the other Az cmdlets) returned to me without actually invoking the cmdlet. E.g I dont want to invoke `New-AzADGroup` just to be able to see what properties it will give me so I can use that in my script. Previously I've relied on IntelliSens in my editor, but it often fails, so I sought out to find a more manual solution (who would have thought..).

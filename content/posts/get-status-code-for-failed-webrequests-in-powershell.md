@@ -3,7 +3,7 @@ title: 'Get status code for failed webrequests in Powershell'
 description: "If you are sending web requests with Powershell you will notice that if your requests fails, that is if it returns any status code other than 2xx, it will thrown an error. Now, how do get the details of the failed request?"
 tags: ['Powershell', 'HTTP', 'REST API']
 date: 2021-09-23T21:35:29+02:00
-image: "get-status-code-for-failed-webrequests-in-powershell"
+image: "get-status-code-for-failed-webrequests-in-powershell.svg"
 ---
 
 If you are sending web requests with Powershell you will notice that if your requests fails, that is if it returns any status code other than 2xx, it will thrown an error. Now, how do get the details of the failed request?
