@@ -1,7 +1,7 @@
 ---
 title: "Migrating from AzureAD and MSOnline to Microsoft Graph Powershell"
 description: "Recently, I've been migrating one of my company's Powershell modules from using AzureAD and MSOnline to Microsoft Graph. During this process I've gathered some useful tips for the journey that I want to share."
-tags: ['powershell', 'microsoft graph', 'graph', 'microsoft', 'azure']
+tags: ['Powershell', 'Microsoft Graph', 'Azure']
 date: 2023-04-18T08:12:48+02:00
 draft: false
 image: "introduction-to-microsoft-graph-powershell-learn-module-social.png"
