@@ -16,8 +16,9 @@
         content="{{ if .IsHome -}}{{ .Site.Title }}{{- else -}}{{ .Title }} - {{ .Site.Title }}{{- end }}" />
     <meta property="og:description"
         content="{{ with .Params.Description }}{{ . }}{{ else }}{{ $.Site.Params.Description }}{{ end }}" />
-    <meta property="og:image"
-        content='{{ .Site.BaseURL }}{{ if eq .Type "posts" -}}images/{{ .Params.Image }}.png{{- else -}}assets/opengraph_image.png{{- end }}' />
+    <!-- <meta property="og:image" -->
+    <!--     content='{{ .Site.BaseURL }}{{ if eq .Type "posts" -}}images/{{ .Params.Image }}.png{{- else -}}assets/opengraph_image.png{{- end }}' /> -->
+    <meta property="og:image" content='{{ .Site.BaseURL }}assets/opengraph_image.png' />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -28,8 +29,9 @@
         content="{{ if .IsHome -}}{{ .Site.Title }}{{- else -}}{{ .Title }} - {{ .Site.Title }}{{- end }}" />
     <meta name="twitter:description"
         content="{{ with .Params.Description }}{{ . }}{{ else }}{{ $.Site.Params.Description }}{{ end }}" />
-    <meta name="twitter:image"
-        content='{{ .Site.BaseURL }}{{ if eq .Type "posts" -}}images/{{ .Params.Image }}.png{{- else -}}assets/opengraph_image.png{{- end }}' />
+    <!-- <meta name="twitter:image" -->
+    <!--     content='{{ .Site.BaseURL }}{{ if eq .Type "posts" -}}images/{{ .Params.Image }}.png{{- else -}}assets/opengraph_image.png{{- end }}' /> -->
+    <meta name="twitter:image" content='{{ .Site.BaseURL }}assets/opengraph_image.png' />
     <link rel="canonical" href="{{ .Permalink }}" />
 
 

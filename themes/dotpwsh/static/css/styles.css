@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 /* Document ========================================================================== */
 /** 1. Correct the line height in all browsers. 2. Prevent adjustments of font size after orientation changes in iOS. */
@@ -614,26 +616,27 @@ Source: https://github.com/mozmorris/tomorrow-pygments
 }
 
 body {
-    font-family: 'Source Sans Pro', 'Segoe UI VSS (Regular)', 'Segoe UI', '-apple-system', BlinkMacSystemFont, Roboto, 'Helvetica Neue', Helvetica, Ubuntu, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    font-family: 'IBM Plex Mono', 'Source Sans Pro', 'Segoe UI VSS (Regular)', 'Segoe UI', '-apple-system', BlinkMacSystemFont, Roboto, 'Helvetica Neue', Helvetica, Ubuntu, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
     min-height: 100vh;
     position: relative;
-    line-height: 1.5;
+    line-height: 1.937;
 }
 
 h2 {
-    font-weight: 600;
-    font-size: 2.938rem;
-    line-height: 4.625rem;
+    font-weight: 700;
+    font-style: italic;
+    font-size: 2.0625rem;
+    line-height: 3.5rem;
 }
 
 h3 {
-    font-size: 2.313rem;
-    line-height: 3.688rem;
+    font-size: 1.625rem;
+    line-height: 2.8125rem;
 }
 
 h4 {
-    font-size: 1.813rem;
-    line-height: 3rem;
+    font-size: 1.25rem;
+    line-height: 2.3125rem;
 }
 
 hr {
@@ -661,7 +664,7 @@ td {
 
 blockquote {
     background: #ffc107;
-    margin: 0;
+    margin: 1.5rem 0;
     padding: 1.25rem;
 }
 
@@ -828,10 +831,9 @@ header nav ul li a:hover {
 .article--heading {
     margin-top: 0;
     margin-bottom: 0.625rem;
-    font-size: 3rem;
-    line-height: 4.813rem;
+    font-size: 2.625rem;
+    line-height: 4.3125rem;
     color: #2458b5;
-    font-family: 'Montserrat';
 }
 
 .article--heading a {
