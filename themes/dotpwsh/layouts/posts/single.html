@@ -9,12 +9,6 @@
             <!-- <img class="article--image" src="/images/{{ .Params.Image }}"> -->
 
             <div class="article--body">{{ .Content }}</div>
-
-            <ul class="article--tag_list">
-                {{ range $index, $val := .Params.Tags }}
-                <li>{{ $val }}</li>
-                {{ end }}
-            </ul>
         </article>
         </section>
     </div>

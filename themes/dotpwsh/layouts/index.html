@@ -30,12 +30,6 @@
 
             <!-- <img class="article--image" src="/images/{{ .Params.Image }}"> -->
             <div class="article--body">{{ .Summary }}</div>
-
-            <ul class="article--tag_list">
-                {{ range $index, $val := .Params.Tags }}
-                <li>{{ $val }}</li>
-                {{ end }}
-            </ul>
         </article>
         {{ end }}
     </section>
