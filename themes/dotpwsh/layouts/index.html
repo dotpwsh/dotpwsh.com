@@ -20,7 +20,7 @@
 <div class="container">
     <section class="main_content">
         {{ range.Site.RegularPages }}
-        <article class="article">
+        <article class="article card">
             <h2 class="article--heading">
                 <a href="{{ .Permalink }}">{{ .Title }}</a>
             </h2>
@@ -30,6 +30,8 @@
 
             <!-- <img class="article--image" src="/images/{{ .Params.Image }}"> -->
             <div class="article--body">{{ .Summary }}</div>
+
+            <a href="{{ .Permalink }}" class="button mt-1-5">Read more</a>
         </article>
         {{ end }}
     </section>
