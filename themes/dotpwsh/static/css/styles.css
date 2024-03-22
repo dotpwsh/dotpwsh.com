@@ -3,9 +3,11 @@
 :root {
     --main-font: Segoe UI,SegoeUI,Helvetica Neue,Helvetica,Arial,sans-serif;
     --main-font-size: 16px;
-    --theme-primary: #0078d4;
+    --theme-primary: #1520A6;
     --theme-primary-inverted: #fff;
     --theme-body-background: #eae7dc;
+    --theme-card-background: #fff;
+    --theme-nav-link-color: #fff;
     --theme-text: #161616;
     --theme-text-subtle: #505050;
     --theme-text-invert: #fff;
@@ -13,8 +15,8 @@
     --theme-hover: #004f8b;
     --theme-visited: #624991;
     --theme-blockquote: #d4d4d4;
+    --theme-blockquote-border-color: #0078d4;
     --theme-inline-code: #e6e6e6;
-    --theme-card-background: #fff;
     --theme-box-shadow-medium: #00000021;
     --theme-box-shadow-light: #0000001c;
     --theme-box-shadow-heavy: #0000002e;
@@ -119,10 +121,13 @@ td {
 }
 
 blockquote {
-    background: var(--theme-blockquote);
+    background: var(--theme-primary-inverted);
     margin: 1.5rem 0;
-    padding: 1.25rem;
+    padding: .2rem 1.25rem;
     color: var(--theme-text);
+    border-left: 3px solid var(--theme-blockquote-border-color);
+    border-radius: var(--theme-border-radius);
+    box-shadow: 0 1.6px 3.6px 0 var(--theme-box-shadow-medium), 0 .3px .9px 0 var(--theme-box-shadow-light);
 }
 
 blockquote a {
@@ -158,7 +163,7 @@ p code {
 }
 
 header {
-    background: inherit;
+    background: var(--theme-primary);
     padding: 10px 40px;
     overflow: hidden;
 }
@@ -169,7 +174,7 @@ header::after {
 }
 
 header h1 {
-    color: var(--theme-text);
+    color: var(--theme-primary-inverted);
     margin: 0;
     font-size: 24px;
     float: left;
@@ -180,16 +185,16 @@ header h1 a {
     gap: .8rem;
     align-items: center;
 
-    color: var(--theme-hyperlink);
+    color: var(--theme-primary-inverted);
     text-decoration: none;
 }
 
 header h1 a:hover {
-    color: var(--theme-text);
+    color: var(--theme-primary-inverted);
 }
 
 header h1 a:visited {
-    color: var(--theme-text);
+    color: var(--theme-primary-inverted);
 }
 
 header nav {
@@ -213,18 +218,18 @@ header nav ul li:last-child {
 }
 
 header nav ul li a {
-    color: var(--theme-text);
+    color: var(--theme-nav-link-color);
     text-decoration: none;
     font-weight: 500;
 }
 
 header nav ul li a:hover {
-    color: var(--theme-text);
-    border-bottom: 2px solid var(--theme-primary);
+    color: var(--theme-nav-link-color);
+    border-bottom: 2px solid var(--theme-primary-inverted);
 }
 
 header nav ul li a:visited {
-    color: var(--theme-text);
+    color: var(--theme-nav-link-color);
 }
 
 .mt-1 {
@@ -248,6 +253,7 @@ header nav ul li a:visited {
     text-decoration: none;
     padding: .5rem 1rem;
     display: inline-flex;
+    line-height: 100%;
 }
 
 .button:visited {
@@ -284,19 +290,16 @@ header nav ul li a:visited {
 
 .main_content {
     width: 100%;
-    margin-top: 4.55rem;
+    margin-top: 1rem;
     font-size: 1.438rem;
-}
-
-.single {
-    background: var(--theme-card-background);
 }
 
 .introduction {
     /* background: rgb(2, 0, 36); */
-    background: radial-gradient(circle, rgba(43, 66, 95, 1) 0%, rgba(2, 0, 36, 1) 100%);
+    /* background: radial-gradient(circle, rgba(43, 66, 95, 1) 0%, rgba(2, 0, 36, 1) 100%); */
+    background: radial-gradient(circle, rgb(41, 41, 41) 0%, rgb(23, 23, 23) 100%);
     font-size: 1.438rem;
-    padding: 4rem;
+    padding: 4rem 1rem;
     color: white;
 }
 
@@ -339,8 +342,8 @@ header nav ul li a:visited {
     margin-right: 0;
     margin-bottom: 0.625rem;
     margin-left: 0;
-    font-size: 2.625rem;
-    line-height: 4.3125rem;
+    font-size: 1.625rem;
+    line-height: 2.3125rem;
     color: var(--theme-text);
 }
 
@@ -360,8 +363,13 @@ header nav ul li a:visited {
     color: var(--theme-text-subtle);
 }
 
+.article--metadata {
+    font-size: .8rem;
+    font-style: italic;
+}
+
 .article--body {
-    line-height: 39px;
+    line-height: 160%;
 }
 
 .article--tag_list {
@@ -424,6 +432,10 @@ footer {
         width: 1080px;
     }
 
+    .introduction {
+        padding: 4rem;
+    }
+
     p,
     h1,
     h2,
@@ -433,6 +445,15 @@ footer {
     h6 {
         margin-left: 0;
         margin-right: 0;
+    }
+
+    .main_content {
+        margin-top: 4.55rem;
+    }
+
+    .article--heading {
+        font-size: 2.625rem;
+        line-height: 4.3125rem;
     }
 }
 
