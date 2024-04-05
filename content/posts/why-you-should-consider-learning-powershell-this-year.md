@@ -8,9 +8,7 @@ For many, Powershell is associated with Windows. But did you know that it works 
 
 I've been using Powershell as my main shell on MacOS since about two years ago. That's one of the great things about Powershell; its both a shell and a programming language. One major benefit of this is that its really easy to test out small pieces of code, or concepts before adding them to your program. And you can use your skills in multiple situations.
 
-I think I can say with confidence that most people look to Python as the default programming language for automation. It has been written tons of articles and books on how to automate tasks with Python. In this article I want to show you that Powershell can do as good a job as Python.
-
-First we're taking a look at what makes Powershell great, then I'm going to cover how to do some basic tasks in Powershell to get you started on automating with Powershell.
+I think I can say with confidence that most people look to Python as the default programming language for automation. It has been written tons of articles and books on how to automate tasks with Python. In this article I want to show you that Powershell is a viable option to Python when it comes to automation. Let's take a look at what makes Powershell so great.
 
 ## What makes Powershell great?
 
