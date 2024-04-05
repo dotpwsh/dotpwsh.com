@@ -11,17 +11,17 @@ Since Microsoft will deprecate the AzureAD, AzureADPreview and MSOnline modules 
 
 [^1]: [Microsoft Entra change announcements – September 2022 train](https://techcommunity.microsoft.com/t5/microsoft-entra-azure-ad-blog/microsoft-entra-change-announcements-september-2022-train/ba-p/2967454)
 
-Recently, I've been migrating one of my company's Powershell modules from using AzureAD and MSOnline to Microsoft Graph. During this process I've gathered some useful tips for the journey that I want to share.
+Recently, I've been migrating one of my company's Powershell modules from using AzureAD and MSOnline to Microsoft Graph. This includes finding a replacement in Microsoft Graph for about 25 different cmdlets from these two modules. During this process I've gathered some useful tips for the journey that I want to share.
 
-**NOTE: This article was written with Powershell 7.3+ in mind and using the v1.25.0.0 of Microsoft Graph Powershell module.**
-
---- 
+> NOTE
+>
+> This article was written with Powershell 7.3+ in mind and using the v1.25.0.0 of Microsoft Graph Powershell module.
 
 ## Tip 1: Find Azure AD and MSOnline cmdlets in Microsoft Graph PowerShell
 
 Microsoft has created a handy list of AzureAD and MSOnline cmdlets mapped to Microsoft Graph Powershell cmdlets. Most of the time you will find a match, but not always. One thing to note is that you will have more luck finding what you are looking for using the beta version for now.
 
-E.g 
+E.g
 
 ```powershell
 PS> Select-MgProfile -Name beta
@@ -232,7 +232,7 @@ If you just want to list all the permissions provided by Microsoft Graph you run
 ```
 
 > NOTE
-> 
+>
 > You can find the API Id and permissions id's for other API's by replacing the "Microsoft Graph" displayname with something else, like for example "Yammer" or "Azure DevOps".
 > - `(Get-AzADServicePrincipal -DisplayName "Yammer").AppId`
 > - `(Get-AzADServicePrincipal -DisplayName "Yammer").Oauth2PermissionScope`
@@ -284,7 +284,7 @@ So to break down the code a little bit. We first check if the application alread
 After the application has been created we need to attach/create a service principal to it to be able to assign permissions.
 
 > NOTE
-> 
+>
 > I find the concept of Enterprise Applications, App Registrations and Service Principals to be a little confusing and I'm not sure I fully understand it, but here's a great explanation: [Stack Overflow: What are the differences between Service Principal and App Registration?](https://stackoverflow.com/questions/65922566/what-are-the-differences-between-service-principal-and-app-registration)
 
 ```powershell
@@ -367,7 +367,7 @@ function Register-MyGraphApp {
         "aec28ec7-4d02-4e8c-b864-50163aea77eb" # (UserAuthenticationMethod.Read.All)
     )
 
-    
+
     $app = Get-AzADApplication -DisplayName $DisplayName
     if (-not ($app)) {
         Write-Verbose -Message "Azure Application was not found. Creating..."
@@ -419,4 +419,3 @@ PS> Connect-MgGraph -ClientId $app.ClientId -TenantId $app.TenantId
 - [Microsoft: Migrate your apps from Azure AD Graph to Microsoft Graph](https://learn.microsoft.com/en-us/graph/migrate-azure-ad-graph-overview)
 - [Microsoft: Migrate applications to the Microsoft Authentication Library (MSAL)](https://learn.microsoft.com/en-us/azure/active-directory/develop/msal-migration)
 - [Microsoft: Upgrade from Azure AD PowerShell to Microsoft Graph PowerShell](https://learn.microsoft.com/en-us/powershell/microsoftgraph/migration-steps?view=graph-powershell-1.0)
-
