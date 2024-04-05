@@ -18,7 +18,7 @@
     --theme-hyperlink: #0065b3;
     --theme-hover: #004f8b;
     --theme-visited: #624991;
-    --theme-blockquote: #d4d4d4;
+    --theme-blockquote: #f8f8f8;
     --theme-blockquote-border-color: #0078d4;
     --theme-inline-code: #e6e6e6;
     --theme-box-shadow-medium: #00000021;
@@ -126,7 +126,7 @@ td {
 }
 
 blockquote {
-    background: var(--theme-primary-inverted);
+    background: var(--theme-blockquote);
     margin: 1.5rem 0;
     padding: .2rem 1.25rem;
     color: var(--theme-text);
