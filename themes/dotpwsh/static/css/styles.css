@@ -320,10 +320,10 @@ header nav ul li a:visited {
 }
 
 .introduction {
-    background: var(--theme-secondary);
+    background: var(--theme-primary);
     font-size: 1.438rem;
     padding: 4rem 1rem;
-    color: var(--theme-text);
+    color: var(--theme-primary-inverted);
 }
 
 .introduction__title {
@@ -337,6 +337,10 @@ header nav ul li a:visited {
 
 .introduction__content p:last-child {
     margin-bottom: 0;
+}
+
+.introduction__content a {
+    color: var(--theme-primary-inverted);
 }
 
 .tag_list {
