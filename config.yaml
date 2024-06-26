@@ -14,7 +14,7 @@ markup:
       unsafe: true
 params:
   OwnerName: Mads Moi-Aune
-  Twitter: dotpwsh
+  Twitter: moiaune
   Github: dotpwsh
   Reddit: dotpwsh
 permalinks:
