@@ -25,9 +25,9 @@ The `ImportECPrivateKey` method expects the key without the header, footer and a
 
 ```powershell
 $privkey = Get-Content private.pem
-$privkey = $key.Replace("-----BEGIN EC PRIVATE KEY-----", "")
-$privkey = $key.Replace("-----END EC PRIVATE KEY-----", "")
-$privkey_decoded = [System.Convert]::FromBase64String($key)
+$privkey = $privkey.Replace("-----BEGIN EC PRIVATE KEY-----", "")
+$privkey = $privkey.Replace("-----END EC PRIVATE KEY-----", "")
+$privkey_decoded = [System.Convert]::FromBase64String($privkey)
 ```
 
 ## 3. Import ECDSA private key
@@ -46,15 +46,15 @@ First we initialize some data in a string, then we convert it to an byte[]. Then
 ```powershell
 $data = "Hello, World"
 $bytes = [System.Text.Encoding]::UTF8.GetBytes($data)
-$signed_data = $ecdsa.SignData($bytes, [System.Security.Cryptography.HashAlgorithmName]::SHA256)
+$signed_data = $sender.SignData($bytes, [System.Security.Cryptography.HashAlgorithmName]::SHA256)
 ```
 
 ## 5. Import public key
 
 ```powershell
 $pubkey = Get-Content public.pem
-$pubkey.Replace("-----BEGIN PUBLIC KEY-----", "")
-$pubkey.Replace("-----END PUBLIC KEY-----", "")
+$pubkey = $pubkey.Replace("-----BEGIN PUBLIC KEY-----", "")
+$pubkey = $pubkey.Replace("-----END PUBLIC KEY-----", "")
 $pubkey_decoded = [System.Convert]::FromBase64String($pubkey)
 
 $receiver = [System.Security.Cryptography.ECDsa]::Create()
